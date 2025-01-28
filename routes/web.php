@@ -36,7 +36,8 @@ Route::middleware('role:user')->group(function () {
 
 Route::middleware('role:vendor')->group(function () {
     Route::get('/vendor/dashboard', function () {
-        return view('vendor.vendor_dashboard');
+        return 'Vendor Dashboard';
+    });
 });
 
 Route::middleware('role:admin')->group(function () {
