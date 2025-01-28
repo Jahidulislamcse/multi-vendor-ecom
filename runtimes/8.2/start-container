@@ -1,0 +1,19 @@
+#!/bin/sh
+
+composer dump-autoload -o
+
+
+# Optimizing Configuration loading
+php artisan config:cache
+# Optimizing Route loading
+php artisan route:cache
+# Optimizing View loading
+php artisan view:cache
+# link storage
+php artisan storage:link --force --quiet
+# migrate the database tables
+php artisan migrate --force --quiet
+# seed necessary data
+php artisan db:seed --force --quiet
+
+/usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
