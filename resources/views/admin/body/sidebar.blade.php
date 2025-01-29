@@ -96,14 +96,14 @@
                     class="nav-item ">
                     <a data-bs-toggle="collapse" href="#hompage">
                         <i class="fas fa-layer-group"></i>
-                        <p>Home Page</p>
+                        <p>Settings</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse "
                         id="hompage">
                         <ul class="nav nav-collapse">
                             <li class="">
-                                <a href="">
+                                <a href="{{ route('admin.settings.index') }}">
                                     <span class="sub-item">Generals</span>
                                 </a>
                             </li>
