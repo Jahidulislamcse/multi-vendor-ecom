@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Admin Dashboard</title>
+    <title>Vendor Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('backend/upload/favicon.ico') }}" type="image/x-icon" />
 
@@ -47,7 +47,7 @@
             -moz-appearance: textfield;
         }
 
-        .admin-dashboard-heading {
+        .vendor-dashboard-heading {
             margin-left: 20px;
             margin-top: 20px;
             /* Adjust as needed */
@@ -72,8 +72,8 @@
             @include('admin.body.header')
 
             <div class="container">
-                <div class="admin-dashboard-heading">
-                    <h4>Admin Dashboard</h4>
+                <div class="vendor-dashboard-heading">
+                    <h4>Vendor Dashboard</h4>
                 </div>
                 @yield('main')
             </div>
