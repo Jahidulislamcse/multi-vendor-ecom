@@ -32,7 +32,7 @@ Route::middleware('role:vendor')->group(function () {
 
 Route::middleware('role:admin')->group(function () {
     Route::get('/admin/dashboard', function () {
-        return view('admin.admin_dashboard');
+        return view('admin.index');
     });
 });
 

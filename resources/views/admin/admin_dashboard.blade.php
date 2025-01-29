@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Admin Dashboard</title>
+    <title>Fleepness</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('backend/upload/favicon.ico') }}" type="image/x-icon" />
 
@@ -46,18 +46,6 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
-
-        .admin-dashboard-heading {
-            margin-left: 20px;
-            margin-top: 20px;
-            /* Adjust as needed */
-            color: black;
-            /* Text color */
-            font-size: 28px;
-            /* Font size */
-            font-weight: bold;
-            /* Font weight */
-        }
     </style>
 
 </head>
@@ -72,9 +60,6 @@
             @include('admin.body.header')
 
             <div class="container">
-                <div class="admin-dashboard-heading">
-                    <h4>Admin Dashboard</h4>
-                </div>
                 @yield('main')
             </div>
 
