@@ -33,7 +33,7 @@ Route::middleware('role:vendor')->group(function () {
     });
 });
 
-// Route::middleware('role:admin')->group(function () {
+Route::middleware('role:admin')->group(function () {
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function () {
         return view('admin.index');
@@ -54,6 +54,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/', [AdminSettingController::class, 'Update'])->name('update');
     });
 });
-// });
+});
 
 require __DIR__ . '/auth.php';

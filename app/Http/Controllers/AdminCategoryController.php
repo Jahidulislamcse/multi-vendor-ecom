@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
@@ -9,7 +10,7 @@ class AdminCategoryController extends Controller
     public function index()
     {
         $categories = Category::with('children')->whereNull('parent_id')->get();
-        return view('backend/categories.index', compact('categories'));
+        return view('admin/categories.index', compact('categories'));
     }
 
     // public function create()
@@ -27,13 +28,13 @@ class AdminCategoryController extends Controller
         ]);
 
         Category::create($request->all());
-        return redirect()->route('categories.index')->with('success', 'Category created successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
     public function edit(Category $category)
     {
         $categories = Category::whereNull('parent_id')->where('id', '!=', $category->id)->get(); // Exclude the category itself
-        return view('backend.categories.category_edit', compact('category', 'categories'));
+        return view('admin..categories.category_edit', compact('category', 'categories'));
     }
 
     public function update(Request $request, Category $category)
@@ -45,20 +46,20 @@ class AdminCategoryController extends Controller
         ]);
 
         $category->update($request->all());
-        return redirect()->route('categories.index')->with('success', 'Category updated successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
     }
 
-    public function destroy(Category $category)
-    {
-        $subCategory = Category::where('parent_id', $category->id)->count('id');
-        if ($subCategory > 0) {
-            return redirect()->route('categories.index')->with('success', 'You can not deleted this category.Please First Delete all Child Category!');
-        }
-        $product = Product::where('category_id', $category->id)->count('id');
-        if ($product > 0) {
-            return redirect()->route('categories.index')->with('success', 'You can not deleted this category.Please First Delete all Product under this Subcategory!');
-        }
-        $category->delete();
-        return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
-    }
+    // public function destroy(Category $category)
+    // {
+    //     $subCategory = Category::where('parent_id', $category->id)->count('id');
+    //     if ($subCategory > 0) {
+    //         return redirect()->route('categories.index')->with('success', 'You can not deleted this category.Please First Delete all Child Category!');
+    //     }
+    //     $product = Product::where('category_id', $category->id)->count('id');
+    //     if ($product > 0) {
+    //         return redirect()->route('categories.index')->with('success', 'You can not deleted this category.Please First Delete all Product under this Subcategory!');
+    //     }
+    //     $category->delete();
+    //     return redirect()->route('categories.index')->with('success', 'Category deleted successfully.');
+    // }
 }

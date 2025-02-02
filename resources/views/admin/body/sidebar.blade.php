@@ -54,7 +54,7 @@
                     <div class="collapse " id="base">
                         <ul class="nav nav-collapse">
                             <li class="">
-                                <a href="{{ route('categories.index') }}">
+                                <a href="{{ route('admin.categories.index') }}">
                                     <span class="sub-item">Categories</span>
                                 </a>
                             </li>
