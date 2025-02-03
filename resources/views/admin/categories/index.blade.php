@@ -41,51 +41,51 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                                <form action="{{ route('admin.categories.store') }}" method="POST"
-                                    enctype="multipart/form-data">
+                                <form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="name">Category Name <span
-                                                            class="text-danger">*</span> </label>
-                                                    <input type="text" name="name" id="name"
-                                                        class="form-control @error('name') is-invalid @enderror"
-                                                        value="{{ old('name') }}" required>
-                                                    @error('name')
-                                                    <div class="alert alert-danger">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-
+                                                <!-- Parent Category -->
                                                 <div class="form-group">
                                                     <label for="parent_id">Parent Category</label>
                                                     <select name="parent_id" id="parent_id" class="form-control">
                                                         <option value="">None</option>
                                                         @foreach ($categories as $parentCategory)
-                                                        <option value="{{ $parentCategory->id }}"
-                                                            {{ old('parent_id') == $parentCategory->id ? 'selected' : '' }}>
+                                                        <option value="{{ $parentCategory->id }}" {{ old('parent_id') == $parentCategory->id ? 'selected' : '' }}>
                                                             {{ $parentCategory->name }}
                                                         </option>
                                                         @endforeach
                                                     </select>
                                                 </div>
 
+                                                <!-- Category Name (Dynamic Label) -->
+                                                <div class="form-group">
+                                                    <label for="name" id="nameLabel">Category Name <span class="text-danger">*</span></label>
+                                                    <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
+                                                        value="{{ old('name') }}" required>
+                                                    @error('name')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Description -->
                                                 <div class="form-group">
                                                     <label for="description">Description</label>
                                                     <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
                                                 </div>
+
+                                                <!-- Order (Dynamic Label & Placeholder) -->
                                                 <div class="form-group">
-                                                    <label for="order">Order</label>
-                                                    <input type="number" name="order" class="form-control"
-                                                        id="order" placeholder="Enter Category Order" />
+                                                    <label for="order" id="orderLabel">Category Order</label>
+                                                    <input type="number" name="order" class="form-control" id="orderInput" placeholder="Enter Category Order" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Save changes</button>
                                     </div>
                                 </form>
@@ -94,19 +94,19 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="" class="display table table-striped table-hover">
+                        <table id="" class="display table table-hover">
                             <thead>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <th>Parent Category</th>
+                                <!-- <th>Parent Category</th> -->
                                 <th>Actions</th>
                             </thead>
                             <tbody>
                                 @foreach ($categories as $key => $category)
-                                <tr>
+                                <tr class="table-primary">
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <td>{{ $category->parent ? $category->parent->name : 'None' }}</td>
+                                    <!-- <td>{{ $category->parent ? $category->parent->name : 'None' }}</td> -->
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $category->id) }}"
                                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"
@@ -124,11 +124,16 @@
                                     </td>
                                 </tr>
                                 @if ($category->children->count())
+                                <tr class="table-warning">
+                                    <td colspan="4">
+                                        <strong>Tags:</strong>
+                                    </td>
+                                </tr>
                                 @foreach ($category->children as $child)
-                                <tr>
+                                <tr class="table-warning">
                                     <td></td>
                                     <td class="text-muted">— {{ $child->name }}</td>
-                                    <td>{{ $child->parent ? $child->parent->name : 'None' }}</td>
+                                    <!-- <td>{{ $child->parent ? $child->parent->name : 'None' }}</td> -->
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $child->id) }}"
                                             data-bs-toggle="tooltip" data-bs-placement="top"
@@ -157,4 +162,24 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('parent_id').addEventListener('change', function() {
+        let nameLabel = document.getElementById('nameLabel');
+        let orderLabel = document.getElementById('orderLabel');
+        let orderInput = document.getElementById('orderInput');
+
+        if (this.value) {
+            // If a parent category is selected, change labels and placeholder
+            nameLabel.innerHTML = "Tag Name <span class='text-danger'>*</span>";
+            orderLabel.innerHTML = "Tag Order";
+            orderInput.placeholder = "Enter Tag Order";
+        } else {
+            // If "None" is selected, reset labels and placeholder
+            nameLabel.innerHTML = "Category Name <span class='text-danger'>*</span>";
+            orderLabel.innerHTML = "Category Order";
+            orderInput.placeholder = "Enter Category Order";
+        }
+    });
+</script>
 @endsection

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class AdminCategoryController extends Controller
 {
@@ -22,12 +23,20 @@ class AdminCategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('categories')->where(function ($query) use ($request) {
+                    return $query->where('parent_id', $request->parent_id);
+                }),
+            ],
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:categories,id',
         ]);
 
         Category::create($request->all());
+
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
