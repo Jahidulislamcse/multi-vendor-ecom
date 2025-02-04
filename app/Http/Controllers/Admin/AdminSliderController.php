@@ -19,6 +19,8 @@ class AdminSliderController extends Controller
         $categories = Category::whereIn('id', Category::pluck('parent_id')->unique())->get();
         $data['sliders'] = Slider::latest()->get();
         $data['categories'] = $categories;
+        $data['tags'] = Category::whereNotIn('id', Category::whereNotNull('parent_id')->pluck('parent_id'))->get();
+        // dd($data);
         return view('admin.sliders.index', $data);
     }
 
@@ -147,6 +149,8 @@ class AdminSliderController extends Controller
 
         $data->photo_alt = $request->photo_alt;
         $data->title = $request->title;
+        // $data->category_id = $request->edit_category_id;
+        $data->tag_id = $request->edit_tag_id;
         $data->description = $request->description;
         $data->btn_name = $request->btn_name;
         $data->btn_url = $request->btn_url;

@@ -105,7 +105,7 @@
                                     <td>{{ $slider->tag->name ?? 'N/A' }}</td>
                                     <td>
                                         <button class="btn btn-warning btn-sm" id="toggleEditForm_{{ $slider->id }}">
-                                            <i class="fa-solid fa-pen-to-square"></i> 
+                                            <i class="fa-solid fa-pen-to-square"></i>
                                         </button>
 
                                         <form action="{{ route('admin.sliders.destroy', $slider->id) }}" method="POST" class="d-inline">
@@ -147,6 +147,32 @@
                                                         @error('photo_alt')
                                                         <div class="alert alert-danger">{{ $message }}</div>
                                                         @enderror
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="edit_category_id">Category</label>
+                                                        <select name="edit_category_id" id="edit_category_id" class="form-control">
+                                                            <option value="" disabled>Select Category</option>
+                                                            @foreach ($categories as $category)
+                                                            <option disabled value="{{ $category->id }}" {{ $slider->category_id == $category->id ? 'selected' : '' }}>
+                                                                {{ $category->name }}
+                                                            </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label for="edit_tag_id">Tag</label>
+                                                        <select name="edit_tag_id" id="edit_tag_id" class="form-control">
+                                                            <option value="">Select Tag</option>
+                                                            @foreach ($tags as $tag)
+                                                            @if ($tag->parent_id == $slider->category_id)
+                                                            <option value="{{ $tag->id }}" {{ $slider->tag_id == $tag->id ? 'selected' : '' }}>
+                                                                {{ $tag->name }}
+                                                            </option>
+                                                            @endif
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                                 </div>
