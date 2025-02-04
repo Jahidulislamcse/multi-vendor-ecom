@@ -75,6 +75,24 @@
                                                     <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
                                                 </div>
 
+                                                <!-- Profile Image -->
+                                                <div class="form-group">
+                                                    <label for="profile_img">Profile Image</label>
+                                                    <input type="file" name="profile_img" id="profile_img" class="form-control @error('profile_img') is-invalid @enderror">
+                                                    @error('profile_img')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
+                                                <!-- Cover Image -->
+                                                <div class="form-group">
+                                                    <label for="cover_img">Cover Image</label>
+                                                    <input type="file" name="cover_img" id="cover_img" class="form-control @error('cover_img') is-invalid @enderror">
+                                                    @error('cover_img')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
                                                 <!-- Order (Dynamic Label & Placeholder) -->
                                                 <div class="form-group">
                                                     <label for="order" id="orderLabel">Category Order</label>
@@ -98,7 +116,8 @@
                             <thead>
                                 <th>ID</th>
                                 <th>Name</th>
-                                <!-- <th>Parent Category</th> -->
+                                <th>Profile Image</th>
+                                <th>Cover Image</th>
                                 <th>Actions</th>
                             </thead>
                             <tbody>
@@ -106,7 +125,12 @@
                                 <tr class="table-primary">
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $category->name }}</td>
-                                    <!-- <td>{{ $category->parent ? $category->parent->name : 'None' }}</td> -->
+                                    <td>
+                                        <img src="{{ asset($category->profile_img) }}" alt="" style="width:100px;">
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset($category->cover_img) }}" alt="" style="width:100px;">
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $category->id) }}"
                                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"
@@ -125,7 +149,7 @@
                                 </tr>
                                 @if ($category->children->count())
                                 <tr class="table-warning">
-                                    <td colspan="4">
+                                    <td colspan="6">
                                         <strong>Tags:</strong>
                                     </td>
                                 </tr>
@@ -133,7 +157,12 @@
                                 <tr class="table-warning">
                                     <td></td>
                                     <td class="text-muted">— {{ $child->name }}</td>
-                                    <!-- <td>{{ $child->parent ? $child->parent->name : 'None' }}</td> -->
+                                    <td>
+                                        <img src="{{ asset($child->profile_img) }}" alt="" style="width:100px;">
+                                    </td>
+                                    <td>
+                                        <img src="{{ asset($child->cover_img) }}" alt="" style="width:100px;">
+                                    </td>
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $child->id) }}"
                                             data-bs-toggle="tooltip" data-bs-placement="top"

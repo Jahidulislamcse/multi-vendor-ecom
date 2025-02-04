@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST">
+                    <form action="{{ route('admin.categories.update', $category->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -53,6 +53,28 @@
                                 </option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <!-- Profile Image Upload -->
+                        <div class="form-group">
+                            <label for="profile_img">Profile Image</label>
+                            <input type="file" name="profile_img" id="profile_img" class="form-control">
+                            @if ($category->profile_img)
+                            <div class="mt-2">
+                                <img src="{{ asset($category->profile_img) }}" alt="Profile Image" style="width: 150px;">
+                            </div>
+                            @endif
+                        </div>
+
+                        <!-- Cover Image Upload -->
+                        <div class="form-group">
+                            <label for="cover_img">Cover Image</label>
+                            <input type="file" name="cover_img" id="cover_img" class="form-control">
+                            @if ($category->cover_img)
+                            <div class="mt-2">
+                                <img src="{{ asset($category->cover_img) }}" alt="Cover Image" style="width: 150px;">
+                            </div>
+                            @endif
                         </div>
 
                         <div class="form-group">
