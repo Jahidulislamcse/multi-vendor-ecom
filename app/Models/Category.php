@@ -26,6 +26,11 @@ class Category extends Model
         return $this->hasMany(Category::class, 'parent_id');
     }
 
+    public function sliders()
+    {
+        return $this->hasMany(Slider::class);
+    }
+
     // Products
     // public function products()
     // {

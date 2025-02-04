@@ -109,7 +109,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a href="">
+                                <a href="{{ route('admin.sliders.index') }}">
                                     <span class="sub-item">Sliders</span>
                                 </a>
                             </li>

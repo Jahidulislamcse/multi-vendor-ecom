@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('store_title');
+            $table->string('profile_img');
+            $table->string('cover_img');
             $table->string('slug')->unique()->index();
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
