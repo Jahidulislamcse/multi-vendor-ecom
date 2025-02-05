@@ -69,9 +69,18 @@
                                                     @enderror
                                                 </div>
 
+                                                <div class="form-group">
+                                                    <label for="name" id="store_titleLabel">Store Title </label>
+                                                    <input type="text" name="store_title" id="store_title" class="form-control @error('store_title') is-invalid @enderror"
+                                                        value="{{ old('store_title') }}">
+                                                    @error('store_title')
+                                                    <div class="alert alert-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+
                                                 <!-- Description -->
                                                 <div class="form-group">
-                                                    <label for="description">Description</label>
+                                                    <label for="description" id="descriptionLabel">Description</label>
                                                     <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
                                                 </div>
 
@@ -118,6 +127,7 @@
                                 <th>Name</th>
                                 <th>Profile Image</th>
                                 <th>Cover Image</th>
+                                <th>Index</th>
                                 <th>Actions</th>
                             </thead>
                             <tbody>
@@ -131,6 +141,7 @@
                                     <td>
                                         <img src="{{ asset($category->cover_img) }}" alt="" style="width:100px;">
                                     </td>
+                                    <td>{{ $category->order }}</td>
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $category->id) }}"
                                             data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Edit"
@@ -163,6 +174,7 @@
                                     <td>
                                         <img src="{{ asset($child->cover_img) }}" alt="" style="width:100px;">
                                     </td>
+                                    <td>{{ $child->order }}</td>
                                     <td>
                                         <a href="{{ route('admin.categories.edit', $child->id) }}"
                                             data-bs-toggle="tooltip" data-bs-placement="top"
@@ -193,22 +205,48 @@
 </div>
 
 <script>
-    document.getElementById('parent_id').addEventListener('change', function() {
+    document.addEventListener('DOMContentLoaded', function() {
+        let parentSelect = document.getElementById('parent_id');
         let nameLabel = document.getElementById('nameLabel');
         let orderLabel = document.getElementById('orderLabel');
         let orderInput = document.getElementById('orderInput');
+        let description = document.getElementById('description');
 
-        if (this.value) {
-            // If a parent category is selected, change labels and placeholder
-            nameLabel.innerHTML = "Tag Name <span class='text-danger'>*</span>";
-            orderLabel.innerHTML = "Tag Order";
-            orderInput.placeholder = "Enter Tag Order";
-        } else {
-            // If "None" is selected, reset labels and placeholder
-            nameLabel.innerHTML = "Category Name <span class='text-danger'>*</span>";
-            orderLabel.innerHTML = "Category Order";
-            orderInput.placeholder = "Enter Category Order";
+        let profileImgField = document.querySelector('.form-group label[for="profile_img"]').parentElement;
+        let coverImgField = document.querySelector('.form-group label[for="cover_img"]').parentElement;
+
+        function toggleFields() {
+            if (parentSelect.value) {
+                // Parent category selected (acts as a tag)
+                nameLabel.innerHTML = "Tag Name <span class='text-danger'>*</span>";
+                store_titleLabel.style.display = 'block';
+                store_title.style.display = 'block';
+                orderLabel.style.display = 'none';
+                orderInput.style.display = 'none';
+                descriptionLabel.style.display = 'block';
+                description.style.display = 'block';
+                profileImgField.style.display = 'block';
+                coverImgField.style.display = 'block';
+            } else {
+                // No parent selected (acts as a main category)
+                nameLabel.innerHTML = "Category Name <span class='text-danger'>*</span>";
+                store_titleLabel.style.display = 'none';
+                store_title.style.display = 'none';
+                orderLabel.style.display = 'none';
+                orderInput.style.display = 'none';
+                profileImgField.style.display = 'none';
+                descriptionLabel.style.display = 'none';
+                description.style.display = 'none';
+                coverImgField.style.display = 'none';
+            }
         }
+
+        // Initial check on page load
+        toggleFields();
+
+        // Add event listener for change event
+        parentSelect.addEventListener('change', toggleFields);
     });
 </script>
+
 @endsection
