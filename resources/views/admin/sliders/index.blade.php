@@ -152,9 +152,9 @@
                                                     <div class="form-group">
                                                         <label for="edit_category_id">Category</label>
                                                         <select name="edit_category_id" id="edit_category_id" class="form-control">
-                                                            <option value="" disabled>Select Category</option>
+                                                            <option value="">Select Category</option>
                                                             @foreach ($categories as $category)
-                                                            <option disabled value="{{ $category->id }}" {{ $slider->category_id == $category->id ? 'selected' : '' }}>
+                                                            <option value="{{ $category->id }}" {{ $slider->category_id == $category->id ? 'selected' : '' }}>
                                                                 {{ $category->name }}
                                                             </option>
                                                             @endforeach
@@ -163,7 +163,7 @@
 
                                                     <div class="form-group">
                                                         <label for="edit_tag_id">Tag</label>
-                                                        <select name="edit_tag_id" id="edit_tag_id" class="form-control">
+                                                        <select name="edit_tag_id" id="edit_tag_id" class="form-control" data-selected-tag="{{ $slider->tag_id }}">
                                                             <option value="">Select Tag</option>
                                                             @foreach ($tags as $tag)
                                                             @if ($tag->parent_id == $slider->category_id)
@@ -173,6 +173,7 @@
                                                             @endif
                                                             @endforeach
                                                         </select>
+
                                                     </div>
                                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                                 </div>
@@ -195,36 +196,64 @@
 @push('script')
 <script>
     $(document).ready(function() {
+        // Toggle Add Slider Form
         $('#toggleAddSliderForm').click(function() {
             $('#addSliderFormSection').toggle();
         });
 
         @foreach($sliders as $slider)
+        // Toggle Edit Slider Form
         $('#toggleEditForm_{{ $slider->id }}').click(function() {
             $('#editSliderRow_{{ $slider->id }}').toggle();
+            let row = $('#editSliderRow_{{ $slider->id }}');
+
+            // Get category and tag fields
+            let categorySelect = row.find('#edit_category_id');
+            let tagSelect = row.find('#edit_tag_id');
+
+            // Fetch and preselect stored tags
+            let selectedCategoryId = categorySelect.val();
+            let selectedTagId = tagSelect.attr('data-selected-tag');
+
+            fetchTags(selectedCategoryId, tagSelect, selectedTagId);
+
+            // When the category changes, fetch tags dynamically
+            categorySelect.on('change', function() {
+                let newCategoryId = $(this).val();
+                fetchTags(newCategoryId, tagSelect, null); // Reset tag selection
+            });
         });
         @endforeach
 
+        // Fetch child tags for Add Slider Form
         $('#category_id').on('change', function() {
             var categoryId = $(this).val();
-            if (categoryId) {
-                $.ajax({
-                    url: '{{ route("admin.getTags") }}',
-                    type: 'GET',
-                    data: {
-                        category_id: categoryId
-                    },
-                    success: function(response) {
-                        $('#tag_id').empty().append('<option value="">Select Tag</option>');
-                        $.each(response, function(index, tag) {
-                            $('#tag_id').append('<option value="' + tag.id + '">' + tag.name + '</option>');
-                        });
-                    }
-                });
-            } else {
-                $('#tag_id').empty().append('<option value="">Select Tag</option>');
-            }
+            fetchTags(categoryId, $('#tag_id'), null);
         });
     });
+
+    // Function to fetch tags dynamically
+    function fetchTags(categoryId, tagSelect, selectedTagId = null) {
+        if (!categoryId) {
+            tagSelect.empty().append('<option value="">Select Tag</option>');
+            return;
+        }
+
+        $.ajax({
+            url: '{{ route("admin.getTags") }}',
+            type: 'GET',
+            data: {
+                category_id: categoryId
+            },
+            success: function(response) {
+                tagSelect.empty().append('<option value="">Select Tag</option>');
+
+                $.each(response, function(index, tag) {
+                    let isSelected = (selectedTagId && tag.id == selectedTagId) ? 'selected' : '';
+                    tagSelect.append('<option value="' + tag.id + '" ' + isSelected + '>' + tag.name + '</option>');
+                });
+            }
+        });
+    }
 </script>
 @endpush

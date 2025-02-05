@@ -149,7 +149,7 @@ class AdminSliderController extends Controller
 
         $data->photo_alt = $request->photo_alt;
         $data->title = $request->title;
-        // $data->category_id = $request->edit_category_id;
+        $data->category_id = $request->edit_category_id;
         $data->tag_id = $request->edit_tag_id;
         $data->description = $request->description;
         $data->btn_name = $request->btn_name;
