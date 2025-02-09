@@ -14,10 +14,10 @@ class AdminCategoryController extends Controller
     public function index()
     {
         $categories = Category::with(['children' => function ($query) {
-            $query->orderBy('order', 'asc'); // Sort child categories by order
+            $query->orderBy('order', 'asc'); 
         }])
             ->whereNull('parent_id')
-            ->orderBy('order', 'asc') // Sort main categories by order
+            ->orderBy('order', 'asc')
             ->get();
         return view('admin/categories.index', compact('categories'));
     }
