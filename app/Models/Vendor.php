@@ -79,10 +79,10 @@ class Vendor extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function products()
-    {
-        return $this->hasMany(Product::class);
-    }
+    // public function products()
+    // {
+    //     return $this->hasMany(Product::class);
+    // }
 
     public function deliveryProviderAccounts()
     {

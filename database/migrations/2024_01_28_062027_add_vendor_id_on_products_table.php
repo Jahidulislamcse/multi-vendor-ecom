@@ -1,9 +1,9 @@
 <?php
 
 use App\Models\Vendor;
+use Lunar\Base\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Lunar\Base\Migration;
 
 return new class extends Migration
 {
@@ -12,8 +12,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table($this->prefix.'products', function (Blueprint $table) {
-            $table->foreignIdFor(Vendor::class);
+        Schema::table($this->prefix . 'products', function (Blueprint $table) {
+            $table->foreignIdFor(Vendor::class)->after("product_type_id");
         });
     }
 
@@ -22,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropColumns($this->prefix.'products', 'vendor_id');
+        Schema::table($this->prefix . 'products', function (Blueprint $table) {
+            $table->dropForeignIdFor(Vendor::class);
+        });
     }
 };

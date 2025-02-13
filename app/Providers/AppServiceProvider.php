@@ -10,9 +10,9 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
-use Lunar\Facades\ModelManifest;
+// use Lunar\Facades\ModelManifest;
 use Lunar\Facades\Payments;
-use Lunar\Models\Product;
+use App\Models\Product;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -49,7 +49,7 @@ class AppServiceProvider extends ServiceProvider
             Product::class => \App\Models\Product::class,
         ]);
 
-        ModelManifest::register($models);
+        // ModelManifest::register($models);
 
         RateLimiter::for('login', function (Request $request) {
             return [

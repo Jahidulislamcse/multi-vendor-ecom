@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminSliderController;
 use App\Http\Controllers\AdminCategoryController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -43,6 +44,8 @@ Route::middleware('role:admin')->group(function () {
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('sliders', AdminSliderController::class);
         Route::get('get-tags', [AdminSliderController::class, 'getTags'])->name('getTags');
+
+        Route::resource('products', ProductController::class);
 
         Route::get('user/list', [UserController::class, 'userList'])->name('user.list');
         Route::post('user/store', [UserController::class, 'store'])->name('user.store');

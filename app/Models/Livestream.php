@@ -68,10 +68,10 @@ class Livestream extends Model implements HasMedia
         return $this->belongsTo(Vendor::class);
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class)->using(LivestreamProduct::class);
-    }
+    // public function products()
+    // {
+    //     return $this->belongsToMany(Product::class)->using(LivestreamProduct::class);
+    // }
 
     public static function booted(): void
     {

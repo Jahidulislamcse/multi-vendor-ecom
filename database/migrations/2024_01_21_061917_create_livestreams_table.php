@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Vendor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,12 +13,8 @@ return new class extends Migration
     {
         Schema::create('livestreams', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Vendor::class);
-            $table->string('title');
-            $table->datetime('scheduled_time')->nullable();
-            $table->datetime('started_at')->nullable();
-            $table->datetime('ended_at')->nullable();
-            $table->integer('total_duration')->nullable();
+            $table->string("title");
+            // $table->string("");
             $table->timestamps();
         });
     }

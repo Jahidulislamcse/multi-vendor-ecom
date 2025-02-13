@@ -31,11 +31,6 @@ class Category extends Model
         return $this->hasMany(Slider::class);
     }
 
-    // Products
-    // public function products()
-    // {
-    //     return $this->hasMany(Product::class, 'category_id');
-    // }
 
     // Automatically set the slug attribute
     protected static function boot()
