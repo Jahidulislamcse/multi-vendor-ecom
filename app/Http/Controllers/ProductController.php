@@ -22,11 +22,11 @@ class ProductController extends Controller
         return view('admin.products.index', $data);
     }
 
-    // public function create()
-    // {
-    //     $categories = Category::all();
-    //     return view('products.create', compact('categories'));
-    // }
+    public function create()
+    {
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
+    }
 
     protected function generateUniqueCode()
     {
@@ -44,9 +44,7 @@ class ProductController extends Controller
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
-
             'short_description' => 'required|string',
-
         ]);
         // Generate a random unique 6-digit code
         $validated['code'] = $this->generateUniqueCode();
@@ -64,8 +62,8 @@ class ProductController extends Controller
                 $manager = new ImageManager();
                 $name_gen = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
                 $img = $manager->make($photo);
-                $img = $img->cover(670, 720);
-                $img->toJpeg(80)->save(public_path('upload/product/' . $name_gen));
+                $img->fit(670, 720);
+                $img->encode('jpg', 80)->save(public_path('upload/product/' . $name_gen));
                 $photo_url = 'upload/product/' . $name_gen;
 
                 ProductImage::create([
@@ -85,8 +83,8 @@ class ProductController extends Controller
                     $manager = new ImageManager();
                     $name_gen = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
                     $img = $manager->make($photo);
-                    $img = $img->cover(1024, 1024);
-                    $img->toJpeg(80)->save(public_path('upload/product/' . $name_gen));
+                    $img->fit(1024, 1024);
+                    $img->encode('jpg', 80)->save(public_path('upload/product/' . $name_gen));
                     $photoPath = 'upload/product/' . $name_gen;
                 }
 
@@ -110,7 +108,7 @@ class ProductController extends Controller
         $productPrice->discount_price = $stockPrice->discount_price;
         $productPrice->quantity = $stockPrice->quantity;
         $productPrice->save();
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
     public function edit(Product $product)
@@ -118,7 +116,7 @@ class ProductController extends Controller
         // dd($product);
         $productImageCount = ProductImage::where('product_id', $product->id)->count();
         $categories = Category::whereNotNull('parent_id')->get();
-        return view('backend.products.product_edit', compact('product', 'categories', 'productImageCount'));
+        return view('admin.products.product_edit', compact('product', 'categories', 'productImageCount'));
     }
 
     public function update(Request $request, Product $product)
@@ -146,8 +144,8 @@ class ProductController extends Controller
 
                 $manager = new ImageManager();
                 $img = $manager->make($photo);
-                $img = $img->cover(670, 720);
-                $img->toJpeg(80)->save(public_path('upload/product/' . $name_gen));
+                $img->fit(670, 720);
+                $img->encode('jpg', 80)->save(public_path('upload/product/' . $name_gen));
 
 
                 $photo_url = 'upload/product/' . $name_gen;
@@ -170,8 +168,8 @@ class ProductController extends Controller
                     $manager = new ImageManager();
                     $name_gen = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
                     $img = $manager->make($photo);
-                    $img = $img->cover(1024, 1024);
-                    $img->toJpeg(80)->save(public_path('upload/product/' . $name_gen));
+                    $img->fit(1024, 1024);
+                    $img->encode('jpg', 80)->save(public_path('upload/product/' . $name_gen));
                     $photoPath = 'upload/product/' . $name_gen; // Set new photo path
                 }
 
@@ -207,8 +205,8 @@ class ProductController extends Controller
                     $manager = new ImageManager();
                     $name_gen = hexdec(uniqid()) . '.' . $photo->getClientOriginalExtension();
                     $img = $manager->make($photo);
-                    $img = $img->cover(1024, 1024);
-                    $img->toJpeg(80)->save(public_path('upload/product/' . $name_gen));
+                    $img->fit(1024, 1024);
+                    $img->encode('jpg', 80)->save(public_path('upload/product/' . $name_gen));
                     $photoPath = 'upload/product/' . $name_gen;
                 }
 
@@ -233,7 +231,7 @@ class ProductController extends Controller
         $productPrice->discount_price = $stockPrice->discount_price;
         $productPrice->quantity = $stockPrice->quantity;
         $productPrice->save();
-        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
 
@@ -241,7 +239,7 @@ class ProductController extends Controller
     {
         $order = OrderItem::where('product_id', $product->id)->count('id');
         if ($order > 0) {
-            return redirect()->route('products.index')->with('success', 'You can not delete this Product . Because Under this product First delete Order.');
+            return redirect()->route('admin.products.index')->with('success', 'You can not delete this Product . Because Under this product First delete Order.');
         }
 
         $product->deleted_at = Carbon::now();
@@ -250,7 +248,7 @@ class ProductController extends Controller
 
 
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 
     public function ImageDelete($id)

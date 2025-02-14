@@ -17,18 +17,18 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    // public function images()
-    // {
-    //     return $this->hasMany(ProductImage::class);
-    // }
-    // public function stocks()
-    // {
-    //     return $this->hasMany(Stock::class);
-    // }
-    // public function imagesProduct()
-    // {
-    //     return $this->hasOne(ProductImage::class);
-    // }
+     public function images()
+     {
+         return $this->hasMany(ProductImage::class);
+     }
+     public function stocks()
+     {
+         return $this->hasMany(Stock::class);
+     }
+     public function imagesProduct()
+     {
+         return $this->hasOne(ProductImage::class);
+     }
 
 
     // Automatically set the slug attribute
