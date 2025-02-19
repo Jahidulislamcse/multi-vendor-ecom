@@ -6,9 +6,12 @@
     <title>Vendor Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('backend/upload/favicon.ico') }}" type="image/x-icon" />
+    
 
     <!-- Fonts and icons -->
     <script src="{{ asset('backend/js/plugin/webfont/webfont.min.js') }}"></script>
+   
+
     <script>
         WebFont.load({
             google: {
@@ -30,7 +33,7 @@
     </script>
 
     <!-- CSS Files -->
-    <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}" />
+            <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/css/template.css') }}" />
 
@@ -65,20 +68,19 @@
 <body>
     <div class="wrapper">
         <!-- Sidebar -->
-        @include('admin.body.sidebar')
+        @include('vendor.body.sidebar')
         <!-- End Sidebar -->
 
         <div class="main-panel">
-            @include('admin.body.header')
+            @include('vendor.body.header')
 
             <div class="container">
                 <div class="vendor-dashboard-heading">
-                    <h4>Vendor Dashboard</h4>
                 </div>
                 @yield('main')
             </div>
 
-            @include('admin.body.footer')
+            @include('vendor.body.footer')
         </div>
 
 

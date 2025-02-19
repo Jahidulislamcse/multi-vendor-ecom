@@ -1,10 +1,10 @@
-@extends('admin.admin_dashboard')
+@extends('vendor.vendor_dashboard')
 @section('main')
 <div class="page-inner">
     <div class="page-header">
         <ul class="breadcrumbs mb-3">
             <li class="nav-home">
-                <a href="{{ route('admin.dashboard') }}">
+                <a href="{{ route('vendor.dashboard') }}">
                     <i class="icon-home"></i>
                     Dashboard
                 </a>
@@ -25,14 +25,14 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Products</h4>
-                        <a class="btn btn-primary btn-round ms-auto" href="{{ route('admin.products.index') }}">
+                        <a class="btn btn-primary btn-round ms-auto" href="{{ route('vendor.products.index') }}">
                             <i class="fa fa-list"></i>
                             List View
                         </a>
                     </div>
                 </div>
                 <div class="card-body">
-                    <form id="myForm" action="{{ route('admin.products.update', $product->id) }}" method="POST"
+                    <form id="myForm" action="{{ route('vendor.products.update', $product->id) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')

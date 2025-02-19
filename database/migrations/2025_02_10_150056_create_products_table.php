@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
+            $table->json('tags')->nullable(); 
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->string('code')->unique();
@@ -22,6 +24,8 @@ return new class extends Migration
             $table->decimal('discount_price', 10, 2)->nullable();
             $table->text('short_description');
             $table->text('long_description');
+            $table->timestamp('deleted_at')->nullable();
+
             $table->text('status');
             $table->timestamps();
         });

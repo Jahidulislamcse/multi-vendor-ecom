@@ -157,6 +157,8 @@ class AdminCategoryController extends Controller
         return redirect()->route('admin.categories.index')->with('success', 'Category updated successfully.');
     }
 
+
+
     /**
      * Function to reorder categories while keeping main and child categories separate.
      */

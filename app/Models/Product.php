@@ -12,23 +12,32 @@ class Product extends Model
 
     protected $guarded = [];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-     public function images()
-     {
-         return $this->hasMany(ProductImage::class);
-     }
-     public function stocks()
-     {
-         return $this->hasMany(Stock::class);
-     }
-     public function imagesProduct()
-     {
-         return $this->hasOne(ProductImage::class);
-     }
+    protected $casts = [
+        'tags' => 'array',
+    ];
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
+    }
+    public function imagesProduct()
+    {
+        return $this->hasOne(ProductImage::class);
+    }
 
 
     // Automatically set the slug attribute
