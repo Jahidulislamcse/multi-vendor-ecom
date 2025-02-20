@@ -507,9 +507,19 @@
     });
 </script>
 <style>
-    .bootstrap-select .dropdown-toggle {
-        display: block !important;
-        visibility: visible !important;
+    #tags-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tag {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .tag input {
+        margin: 0;
     }
 </style>
 

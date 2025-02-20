@@ -571,11 +571,27 @@
     document.getElementById('images').addEventListener('change', function() {
         checkImageField({
             {
-                $image - > id
+                $image->id;
             }
         });
     });
 </script>
 
+<style>
+    #tags-container {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .tag {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .tag input {
+        margin: 0;
+    }
+</style>
 
 @endpush
