@@ -68,13 +68,13 @@
                                                 </div>
 
                                                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
                                                 <div class="form-group">
                                                     <label for="tags">Tags</label>
-                                                    <select name="tags[]" id="tags" class="form-control selectpicker" multiple data-live-search="true">
-                                                        <!-- Options will be added dynamically -->
-                                                    </select>
+                                                    <div id="tags-container">
+                                                        <!-- Tags will be loaded here dynamically -->
+                                                    </div>
                                                 </div>
-
 
                                                 <div class="form-group">
                                                     <label for="name">Name <span class="text-danger">*</span>
@@ -264,15 +264,15 @@
 
 @push('script')
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#tags').selectpicker(); // Initialize Bootstrap Select
-
+        // Load tags based on selected category
         $('#category_id').change(function() {
             let categoryId = $(this).val();
-            $('#tags').empty(); // Clear previous options
+            $('#tags-container').empty(); // Clear previous tags
 
             if (categoryId) {
                 $.ajax({
@@ -281,30 +281,39 @@
                     data: {
                         category_id: categoryId
                     },
+                    dataType: 'json',
                     success: function(response) {
                         console.log("Tags received:", response);
 
-                        $('#tags').empty(); // Clear old options
+                        let tags = response.data || response;
+                        $('#tags-container').empty();
 
-                        if (response.length > 0) {
-                            response.forEach(tag => {
-                                $('#tags').append(`<option value="${tag.id}">${tag.name}</option>`);
+                        if (Array.isArray(tags) && tags.length > 0) {
+                            tags.forEach(tag => {
+                                // Create checkboxes for each tag
+                                $('#tags-container').append(`
+                                    <div class="form-check">
+                                        <input type="checkbox" name="tags[]" class="form-check-input" value="${tag.id}" id="tag_${tag.id}">
+                                        <label class="form-check-label" for="tag_${tag.id}">${tag.name}</label>
+                                    </div>
+                                `);
                             });
                         } else {
-                            $('#tags').append('<option disabled>No tags available</option>');
+                            $('#tags-container').html('<div>No tags available</div>');
                         }
-
-                        $('#tags').selectpicker('refresh'); // Refresh Bootstrap Select
                     },
-                    error: function(xhr) {
+                    error: function(xhr, status, error) {
                         console.error("Error fetching tags:", xhr.responseText);
+                        alert("Failed to load tags. Please try again.");
                     }
                 });
-
+            } else {
+                $('#tags-container').html('<div>Select a category first</div>');
             }
         });
     });
 </script>
+
 
 <script>
     $(document).ready(function() {
@@ -497,4 +506,11 @@
         }
     });
 </script>
+<style>
+    .bootstrap-select .dropdown-toggle {
+        display: block !important;
+        visibility: visible !important;
+    }
+</style>
+
 @endpush

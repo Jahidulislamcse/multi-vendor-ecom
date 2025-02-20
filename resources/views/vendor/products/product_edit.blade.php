@@ -55,6 +55,19 @@
                                 @enderror
                             </div>
 
+                            <!-- Tags Selection (Checkboxes) -->
+                            <div class="form-group">
+                                <label for="tags">Tags</label>
+                                <div id="tags-container">
+                                    <!-- Tags will be loaded here dynamically -->
+                                </div>
+                                @error('tags')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+
                             <div class="form-group">
                                 <label for="images">Product Existing Images </label>
                                 <div class="row">
@@ -292,6 +305,60 @@
 @endsection
 
 @push('script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Load tags based on selected category
+        $('#category_id').change(function() {
+            let categoryId = $(this).val();
+            $('#tags-container').empty(); // Clear previous tags
+
+            if (categoryId) {
+                $.ajax({
+                    url: "{{ url('/vendor/get-tags') }}",
+                    type: 'GET',
+                    data: {
+                        category_id: categoryId
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        console.log("Tags received:", response);
+
+                        let tags = response.data || response;
+                        $('#tags-container').empty();
+
+                        if (Array.isArray(tags) && tags.length > 0) {
+                            tags.forEach(tag => {
+                                // Get existing tags from the product and check if the current tag is selected
+                                let existingTags = @json($product->tags ?? []); // Decode the JSON tags column
+                                let isChecked = existingTags.includes(tag.id) ? 'checked' : '';
+
+                                // Create checkboxes for each tag
+                                $('#tags-container').append(`
+                                    <div class="form-check">
+                                        <input type="checkbox" name="tags[]" class="form-check-input" value="${tag.id}" id="tag_${tag.id}" ${isChecked}>
+                                        <label class="form-check-label" for="tag_${tag.id}">${tag.name}</label>
+                                    </div>
+                                `);
+                            });
+                        } else {
+                            $('#tags-container').html('<div>No tags available</div>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error fetching tags:", xhr.responseText);
+                        alert("Failed to load tags. Please try again.");
+                    }
+                });
+            } else {
+                $('#tags-container').html('<div>Select a category first</div>');
+            }
+        });
+
+        // Trigger category change on page load to load tags if the product is being edited
+        $('#category_id').trigger('change');
+    });
+</script>
 <script>
     $(document).ready(function() {
         $('#myForm').validate({

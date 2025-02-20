@@ -37,12 +37,6 @@ class VendorProductController extends Controller
         return $code;
     }
 
-    public function getTags(Request $request)
-    {
-        $categoryId = $request->category_id;
-        $tags = Category::where('category_id', $categoryId)->get(); 
-        return response()->json($tags);
-    }
 
     public function store(Request $request)
     {
@@ -146,6 +140,11 @@ class VendorProductController extends Controller
         // If code is not provided, keep the existing code or generate a new one
         $validated['code'] = $validated['code'] ?? $product->code ?? $this->generateUniqueCode();
         $validated['status'] = $request->status;
+        if ($request->has('tags')) {
+            $validated['tags'] = json_encode($request->tags);
+        } else {
+            $validated['tags'] = json_encode([]); // If no tags are selected, store an empty array
+        }
         $product->update($validated);
 
         if ($request->hasFile('images')) {

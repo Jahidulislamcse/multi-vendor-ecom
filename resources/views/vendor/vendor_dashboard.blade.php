@@ -6,11 +6,16 @@
     <title>Vendor Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
     <link rel="icon" href="{{ asset('backend/upload/favicon.ico') }}" type="image/x-icon" />
-    
 
+    <style>
+        .bootstrap-select .dropdown-toggle {
+            display: block !important;
+            visibility: visible !important;
+        }
+    </style>
     <!-- Fonts and icons -->
     <script src="{{ asset('backend/js/plugin/webfont/webfont.min.js') }}"></script>
-   
+
 
     <script>
         WebFont.load({
@@ -33,7 +38,7 @@
     </script>
 
     <!-- CSS Files -->
-            <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/css/plugins.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('backend/css/template.css') }}" />
 
