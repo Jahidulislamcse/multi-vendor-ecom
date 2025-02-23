@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vendor;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
@@ -9,17 +9,16 @@ use App\Models\OrderItem;
 use App\Models\ProductImage;
 use App\Models\Stock;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
-use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use Illuminate\Http\Request;
 
-class VendorProductController extends Controller
+class AdminProductController extends Controller
 {
     public function index()
     {
         $data['products'] = Product::with('category')->latest()->whereNull('deleted_at')->where('user_id', auth()->id())->get();
         $data['categories'] = Category::whereNull('parent_id')->get();
-        return view('vendor.products.index', $data);
+        return view('admin.products.index', $data);
     }
 
     // public function create()
@@ -112,7 +111,7 @@ class VendorProductController extends Controller
         $productPrice->discount_price = $stockPrice->discount_price;
         $productPrice->quantity = $stockPrice->quantity;
         $productPrice->save();
-        return redirect()->route('vendor.products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
     public function edit(Product $product)
@@ -120,7 +119,7 @@ class VendorProductController extends Controller
         // dd($product);
         $productImageCount = ProductImage::where('product_id', $product->id)->count();
         $categories = Category::whereNull('parent_id')->get();
-        return view('vendor.products.product_edit', compact('product', 'categories', 'productImageCount'));
+        return view('admin.products.product_edit', compact('product', 'categories', 'productImageCount'));
     }
 
     public function update(Request $request, Product $product)
@@ -241,7 +240,7 @@ class VendorProductController extends Controller
         $productPrice->discount_price = $stockPrice->discount_price;
         $productPrice->quantity = $stockPrice->quantity;
         $productPrice->save();
-        return redirect()->route('vendor.products.index')->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
     }
 
 
@@ -249,7 +248,7 @@ class VendorProductController extends Controller
     {
         $order = OrderItem::where('product_id', $product->id)->count('id');
         if ($order > 0) {
-            return redirect()->route('vendor.products.index')->with('success', 'You can not delete this Product . Because Under this product First delete Order.');
+            return redirect()->route('admin.products.index')->with('success', 'You can not delete this Product . Because Under this product First delete Order.');
         }
 
         $product->deleted_at = Carbon::now();
@@ -257,7 +256,7 @@ class VendorProductController extends Controller
         $product->save();
 
 
-        return redirect()->route('vendor.products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 
     public function ImageDelete($id)
@@ -291,3 +290,4 @@ class VendorProductController extends Controller
         return redirect()->back()->with($notification);
     }
 }
+

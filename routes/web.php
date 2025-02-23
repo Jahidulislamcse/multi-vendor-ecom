@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\Admin\AdminSettingController;
 use App\Http\Controllers\Admin\AdminSliderController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\Vendor\VendorProductController;
-use App\Http\Controllers\Vendor\TagController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -53,8 +54,10 @@ Route::middleware('role:admin')->group(function () {
         })->name('dashboard');
 
         Route::resource('categories', AdminCategoryController::class);
+        Route::resource('products', AdminProductController::class);
+
         Route::resource('sliders', AdminSliderController::class);
-        Route::get('get-tags', [AdminSliderController::class, 'getTags'])->name('getTags');
+        Route::get('get-tags', [TagController::class, 'getTags'])->name('getTags');
 
 
         Route::get('user/list', [UserController::class, 'userList'])->name('user.list');

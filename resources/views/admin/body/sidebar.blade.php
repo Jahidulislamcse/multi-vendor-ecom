@@ -59,7 +59,7 @@
                                 </a>
                             </li>
                             <li class="">
-                                <a href="">
+                                <a href="{{ route('admin.products.index') }}">
                                     <span class="sub-item">Products</span>
                                 </a>
                             </li>
