@@ -16,7 +16,7 @@ class AdminProductController extends Controller
 {
     public function index()
     {
-        $data['products'] = Product::with('category')->latest()->whereNull('deleted_at')->where('user_id', auth()->id())->get();
+        $data['products'] = Product::with('category')->latest()->whereNull('deleted_at')->get();
         $data['categories'] = Category::whereNull('parent_id')->get();
         return view('admin.products.index', $data);
     }
@@ -37,9 +37,7 @@ class AdminProductController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-    }
+    public function store(Request $request) {}
 
     public function edit(Product $product)
     {
@@ -77,15 +75,8 @@ class AdminProductController extends Controller
         return redirect()->route('admin.products.index')->with('success', 'Product suspended successfully.');
     }
 
-    public function ImageDelete($id)
-    {
-
-    }
+    public function ImageDelete($id) {}
 
 
-    public function StockDelete($id)
-    {
-
-    }
+    public function StockDelete($id) {}
 }
-
