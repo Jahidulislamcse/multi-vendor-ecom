@@ -9,6 +9,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\Vendor\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Vendor\VendorOrderController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -40,6 +41,30 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
     })->name('dashboard');
     Route::resource('products', VendorProductController::class);
     Route::get('/get-tags', [TagController::class, 'getTags'])->name('get.tags');
+});
+
+Route::controller(VendorOrderController::class)->group(function () {
+    Route::prefix('vendor')->name('vendor.')->group(function () {
+        Route::prefix('order')->name('order.')->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/pending', 'PendingOrder')->name('pending');
+            Route::get('/details/{id}', 'orderDetails')->name('details');
+
+            Route::get('/confirmed', 'ConfirmedOrder')->name('confirmed');
+
+            Route::get('/processing', 'ProcessingOrder')->name('processing');
+
+            Route::get('/delivered', 'DeliveredOrder')->name('delivered');
+            Route::get('/cancled', 'CancledOrder')->name('cancled');
+
+            Route::get('/pending/confirm/{order_id}', 'PendingToConfirm')->name('pending-confirm');
+            Route::get('/confirm/processing/{order_id}', 'ConfirmToProcess')->name('confirm-processing');
+            Route::get('/pending/cancel/{order_id}', 'PendingToCancel')->name('pending-cancel');
+            Route::get('/processing/delivered/{order_id}', 'ProcessToDelivered')->name('processing-delivered');
+
+            Route::get('/invoice/download/{order_id}', 'AdminInvoiceDownload')->name('invoice.download');
+        });
+    });
 });
 
 

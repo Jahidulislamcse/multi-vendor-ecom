@@ -70,7 +70,7 @@
                     <div class="collapse " id="order">
                         <ul class="nav nav-collapse">
                             <li class="">
-                                <a href="">
+                                <a href="{{ route('vendor.order.index') }}">
                                     All Order
                                 </a>
                             </li>
