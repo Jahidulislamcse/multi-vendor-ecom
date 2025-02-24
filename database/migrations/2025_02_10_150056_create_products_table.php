@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->json('tags')->nullable(); 
+            $table->json('tags')->nullable();
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->string('code')->unique();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->timestamp('deleted_at')->nullable();
 
             $table->text('status');
+            $table->text('admin_approval')->default('approved');
             $table->timestamps();
         });
     }

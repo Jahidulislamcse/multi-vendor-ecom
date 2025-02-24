@@ -25,11 +25,6 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Products</h4>
-                        <button class="btn btn-primary btn-round ms-auto" data-bs-toggle="modal"
-                            data-bs-target="#addRowModal">
-                            <i class="fa fa-plus"></i>
-                            Add New
-                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -212,7 +207,7 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Status</th>
-
+                                <th>Admin Approval</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -238,16 +233,10 @@
                                 <td>{{ $product->selling_price }}</td>
                                 <td>{{ $countQty }}</td>
                                 <td>{{ $product->status }}</td>
+                                <td>{{ $product->admin_approval }}</td>
                                 <td style="display: flex;gap:5px ">
                                     <a href="{{ route('admin.products.edit', $product->id) }}"
-                                        class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('admin.products.destroy', $product->id) }}"
-                                        method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Are you sure you want to delete this product?')">Delete</button>
-                                    </form>
+                                        class="btn btn-warning btn-sm">View</a>
                                 </td>
                             </tr>
                             @endforeach
