@@ -1,10 +1,10 @@
-@extends('admin.admin_dashboard')
+@extends('vendor.vendor_dashboard')
 @section('main')
 <div class="page-inner">
     <div class="page-header">
         <ul class="breadcrumbs mb-3">
             <li class="nav-home">
-                <a href="{{ route('admin.dashboard') }}">
+                <a href="{{ route('vendor.dashboard') }}">
                     <i class="icon-home"></i>
                     Dashbard
                 </a>
@@ -28,17 +28,17 @@
                     <table class="table" style="background:#F4F6FA;font-weight: 600;">
                         <tr>
                             <th>Shipping Name:</th>
-                            <th>{{ $orderInfo->customerInfo->name }}</th>
+                            <th></th>
                         </tr>
 
                         <tr>
                             <th>Shipping Phone:</th>
-                            <th>{{ $orderInfo->customerInfo->phone }}</th>
+                            <th></th>
                         </tr>
 
                         <tr>
                             <th>Shipping Email:</th>
-                            <th>{{ $orderInfo->customerInfo->email }}</th>
+                            <th></th>
                         </tr>
 
                         <tr>
@@ -76,12 +76,12 @@
                     <table class="table" style="background:#F4F6FA;font-weight: 600;">
                         <tr>
                             <th> Name :</th>
-                            <th>{{ $orderInfo->customerInfo->name }}</th>
+                            <th></th>
                         </tr>
 
                         <tr>
                             <th>Phone :</th>
-                            <th>{{ $orderInfo->customerInfo->phone }}</th>
+                            <th></th>
                         </tr>
 
                         <tr>
@@ -107,19 +107,19 @@
                             <th> </th>
                             <th>
                                 @if ($orderInfo->status == 'pending')
-                                    <a href="{{ route('admin.order.pending-confirm', $orderInfo->id) }}"
+                                    <a href="{{ route('vendor.order.pending-confirm', $orderInfo->id) }}"
                                         class="btn btn-block btn-success" id="confirm"
                                         onclick="return confirm('Are you sure you want to Confirm this order?');">Confirm
                                         Order</a>
-                                    <a href="{{ route('admin.order.pending-cancel', $orderInfo->id) }}"
+                                    <a href="{{ route('vendor.order.pending-cancel', $orderInfo->id) }}"
                                         class="btn btn-block btn-success" id="cancel"
                                         onclick="return confirm('Are you sure you want to Cancel this order?');">Cancel
                                         Order</a>
                                 @elseif($orderInfo->status == 'confirm')
-                                    <a href="{{ route('admin.order.confirm-processing', $orderInfo->id) }}"
+                                    <a href="{{ route('vendor.order.confirm-processing', $orderInfo->id) }}"
                                         class="btn btn-block btn-success" id="processing">Processing Order</a>
                                 @elseif($orderInfo->status == 'processing')
-                                    <a href="{{ route('admin.order.processing-delivered', $orderInfo->id) }}"
+                                    <a href="{{ route('vendor.order.processing-delivered', $orderInfo->id) }}"
                                         class="btn btn-block btn-success" id="delivered">Delivered Order</a>
                                 @endif
                             </th>
@@ -153,7 +153,7 @@
                                 <td class="col-md-2">
                                     <label>Product Name </label>
                                 </td>
-                               
+
                                 <td class="col-md-1">
                                     <label>Stock </label>
                                 </td>
@@ -195,11 +195,11 @@
                                             <br/>
                                             <h5>Size:{{ $item->stockInfo->size }}</h5>
                                         </div>
-                                      
+
                                     </td>
 
 
-                                    
+
                                     <td class="col-md-1">
                                         <label>{{ $item->productInfo->quantity }}</label>
                                     </td>

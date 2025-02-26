@@ -22,8 +22,6 @@ class VendorOrderController extends Controller
     public function orderDetails(Request $request, $id=null){
 
         $orderInfo = MainOrder::with('orderDetails','customerInfo','orderDetails.productInfo','orderDetails.productInfo.imagesProduct','orderDetails.stockInfo')->where('id',$request->id)->first();
-
-        // dd($orderInfo);
         return view('vendor.order.details', compact('orderInfo'));
 
     }

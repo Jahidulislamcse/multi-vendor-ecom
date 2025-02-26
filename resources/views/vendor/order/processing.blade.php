@@ -1,10 +1,10 @@
-@extends('admin.admin_dashboard')
+@extends('vendor.vendor_dashboard')
 @section('main')
 <div class="page-inner">
     <div class="page-header">
         <ul class="breadcrumbs mb-3">
             <li class="nav-home">
-                <a href="{{ route('admin.dashboard') }}">
+                <a href="{{ route('vendor.dashboard') }}">
                     <i class="icon-home"></i>
                     Dashbard
                 </a>
@@ -23,7 +23,7 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="card-title">Orders</h4>
-                       
+
                     </div>
                 </div>
                 <div class="card-body">
@@ -37,7 +37,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
-                            
+
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,7 @@
                                     <th>Payment Type</th>
                                     <th>Payment Status</th>
                                     <th>Updated Date</th>
-                                   
+
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -62,10 +62,10 @@
                                 @foreach ($orderList as $key => $orderInfo)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-                                           
 
-                                            <td>{{ $orderInfo->customerInfo->name }} <br/>
-                                                {{ $orderInfo->customerInfo->phone }}
+
+                                            <td> 
+
                                             </td>
                                             <td><span class="badge bg-success" style="font-size: 15px;">{{ $orderInfo->status }}</span>
                                             </td>
@@ -75,11 +75,11 @@
                                             <td>{{ $orderInfo->created_at->format('d/m/Y')}}</td>
                                             <td>{{ $orderInfo->processing_date}}</td>
                                             <td>
-                                                <a href="{{ route('admin.order.details', $orderInfo->id) }}"
+                                                <a href="{{ route('vendor.order.details', $orderInfo->id) }}"
                                                     class="btn btn-warning btn-sm">View</a>
-                                                    <a href="{{ route('admin.order.invoice.download', $orderInfo->id) }}" class="btn btn-danger"
+                                                    <a href="{{ route('vendor.order.invoice.download', $orderInfo->id) }}" class="btn btn-danger"
                                                         title="Invoice Pdf"><i class="fa fa-download"></i> </a>
-                                              
+
                                             </td>
                                         </tr>
                                     @endforeach

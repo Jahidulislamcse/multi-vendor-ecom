@@ -75,10 +75,11 @@
                                 </a>
                             </li>
 
-                            <li class=""> <a href="">Pending Orders</a></li>
-                            <li class=""> <a href="">Confirm Orders</a></li>
-                            <li class=""> <a href="">Completed Orders</a></li>
-                            <li class=""> <a href="">Canceled Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.pending') }}">Pending Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.confirmed') }}">Confirm Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.processing') }}">Processing Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.delivered') }}">Completed Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.cancled') }}">Canceled Orders</a></li>
                         </ul>
                     </div>
                 </li>

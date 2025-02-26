@@ -73,9 +73,8 @@
                                     <td>{{ $orderInfo->payment_status }}</td>
                                     <td>{{ $orderInfo->updated_at->format('d/m/Y')}}</td>
                                     <td>
-                                        <a href=""
+                                        <a href="{{ route('vendor.order.details', $orderInfo->id) }}"
                                             class="btn btn-warning btn-sm">View</a>
-
                                     </td>
                                 </tr>
                                 @endforeach

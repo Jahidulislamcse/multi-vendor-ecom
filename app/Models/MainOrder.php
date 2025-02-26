@@ -18,8 +18,8 @@ class MainOrder extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    // public function orderDetails()
-    // {
-    //     return $this->hasMany(OrderItem::class, 'main_order_id', 'id');
-    // }
+    public function orderDetails()
+    {
+        return $this->hasMany(OrderItem::class, 'main_order_id', 'id');
+    }
 }
