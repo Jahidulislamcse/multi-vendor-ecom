@@ -49,7 +49,6 @@ Route::controller(VendorOrderController::class)->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/pending', 'PendingOrder')->name('pending');
             Route::get('/details/{id}', 'orderDetails')->name('details');
-
             Route::get('/confirmed', 'ConfirmedOrder')->name('confirmed');
 
             Route::get('/processing', 'ProcessingOrder')->name('processing');
@@ -69,8 +68,9 @@ Route::controller(VendorOrderController::class)->group(function () {
 
 
 Route::middleware(['auth', 'role:admin,vendor'])->group(function () {});
-
-
+// Route::get('/create-vendor-account', 'createVendor')->name('create.vendor.account');
+Route::get('/create-vendor-account', [ProfileController::class, 'createVendor'])->name('create.vendor.account');
+Route::post('vendor/application', [UserController::class, 'application'])->name('vendor.application');
 
 Route::middleware('role:admin')->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {

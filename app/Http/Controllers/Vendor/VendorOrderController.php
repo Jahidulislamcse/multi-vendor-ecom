@@ -25,6 +25,41 @@ class VendorOrderController extends Controller
         return view('vendor.order.details', compact('orderInfo'));
 
     }
+    public function PendingToCancel($order_id)
+    {
+        MainOrder::findOrFail($order_id)->update([
+            'status' => 'cancel',
+            'cancel_date' => Carbon::now()->format('d F Y'),
+        ]);
+        $order = MainOrder::where('id', $order_id)->first();
+        $orderItem = OrderItem::where('main_order_id', $order_id)->get();
+        foreach ($orderItem as $item) {
+            $product = Stock::where('id', $item->stock_info_id)->first();
+            $product->order_qty = $product->order_qty - $item->qty;
+            $product->quantity = $product->quantity + $item->qty;
+            $product->save();
+        }
+
+
+        $notification = array(
+            'message' => 'Order Cancel Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('vendor.order.cancled')->with($notification);
+    }
+
+    public function PendingToConfirm($order_id)
+    {
+        MainOrder::findOrFail($order_id)->update(['status' => 'confirm', 'confirmed_date' => Carbon::now()->format('d F Y')]);
+
+        $notification = array(
+            'message' => 'Order Confirm Successfully',
+            'alert-type' => 'success'
+        );
+
+        return redirect()->route('vendor.order.confirmed')->with($notification);
+    }
     public function PendingOrder(){
 
         $orderList = MainOrder::with('customerInfo')->where('status', 'pending')->orderBy('id', 'DESC')->get();
@@ -67,42 +102,6 @@ class VendorOrderController extends Controller
     }
 
 
-    public function PendingToCancel($order_id)
-    {
-        MainOrder::findOrFail($order_id)->update([
-            'status' => 'cancel',
-            'cancel_date' => Carbon::now()->format('d F Y'),
-        ]);
-        $order = MainOrder::where('id',$order_id)->first();
-        $orderItem = OrderItem::where('order_id',$order_id)->get();
-        foreach($orderItem as $item){
-            $product = Stock::where('id',$item->stock_info_id)->first();
-            $product->order_qty =$product->order_qty - $item->qty;
-            $product->quantity = $product->quantity + $item->qty;
-            $product->save();
-        }
-
-
-        $notification = array(
-            'message' => 'Order Cancel Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.order.cancled')->with($notification);
-    } // End Method
-
-    public function PendingToConfirm($order_id)
-    {
-        MainOrder::findOrFail($order_id)->update(['status' => 'confirm','confirmed_date' =>Carbon::now()->format('d F Y')]);
-
-        $notification = array(
-            'message' => 'Order Confirm Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.order.confirmed')->with($notification);
-    } // End Method
-
     public function ConfirmToProcess($order_id)
     {
         MainOrder::findOrFail($order_id)->update(['status' => 'processing','processing_date' =>Carbon::now()->format('d F Y')]);
@@ -112,8 +111,8 @@ class VendorOrderController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('admin.order.processing')->with($notification);
-    } // End Method
+        return redirect()->route('vendor.order.processing')->with($notification);
+    } 
 
 
     public function ProcessToDelivered($order_id)
@@ -127,8 +126,8 @@ class VendorOrderController extends Controller
             'alert-type' => 'success'
         );
 
-        return redirect()->route('admin.order.delivered')->with($notification);
-    } // End Method
+        return redirect()->route('vendor.order.delivered')->with($notification);
+    } 
 
 
     public function AdminInvoiceDownload($order_id)

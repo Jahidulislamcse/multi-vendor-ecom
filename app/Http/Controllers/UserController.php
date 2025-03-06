@@ -36,10 +36,40 @@ class UserController extends Controller
             'address' => $request->address,
             'password' => bcrypt($request->password),
             'role' => $request->role,
+            'status' => 'approved',
         ]);
 
         // Redirect with success message
         return redirect()->route('admin.user.list')->with('success', 'User created successfully!');
+    }
+
+    public function application(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'password' => 'required|string|min:8',
+            'role' => 'required|in:vendor,admin',
+        ]);
+
+        // dd($request->all());
+
+        // Create the user
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone_number' => $request->phone,
+            'address' => $request->address,
+            'password' => bcrypt($request->password),
+            'role' => $request->role,
+            'status' => 'pending',
+        ]);
+
+        // Redirect with success message
+        return redirect()->route('create.vendor.account')->with('success', 'Account created successfully!');
     }
 
     public function edit($id)

@@ -62,8 +62,6 @@
                                 @foreach ($orderList as $key => $orderInfo)
                                         <tr>
                                             <td>{{ $key + 1 }}</td>
-
-
                                             <td>
                                             </td>
                                             <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>

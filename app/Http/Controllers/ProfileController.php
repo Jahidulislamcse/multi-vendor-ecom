@@ -20,6 +20,11 @@ class ProfileController extends Controller
         return UserData::from($user);
     }
 
+    public function createVendor()
+    {
+        return view('vendor.account.create');
+    }
+
     public function updateEmail(UpdateEmailData $data): UserData
     {
         /** @var User */

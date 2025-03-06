@@ -96,6 +96,7 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Role</th>
+                                    <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -108,6 +109,7 @@
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->address }}</td>
                                     <td>{{ ucfirst($user->role) }}</td>
+                                    <td>{{ ucfirst($user->status) }}</td>
                                     <td>
                                         <!-- Edit Button -->
                                         @if($user->role === 'vendor' || $user->role === 'admin')
@@ -228,6 +230,15 @@
                                                 <select name="role" id="edit-role" class="form-control" required>
                                                     <option value="vendor" ${response.role === 'vendor' ? 'selected' : ''}>Vendor</option>
                                                     <option value="admin" ${response.role === 'admin' ? 'selected' : ''}>Admin</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="edit-status">Status</label>
+                                                <select name="status" id="edit-status" class="form-control" required>
+                                                    <option value="pending" ${response.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                                    <option value="approved" ${response.status === 'approved' ? 'selected' : ''}>Approved</option>
                                                 </select>
                                             </div>
                                         </div>
