@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('address');
             $table->string('role')->default('user');
             $table->string('status')->nullable();
+            $table->decimal('total_sales', 15, 2)->default(0);
+            $table->decimal('withdrawn_amount', 15, 2)->default(0);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->rememberToken();

@@ -9,14 +9,14 @@ class UserController extends Controller
 {
     public function userList()
     {
-        // $users = User::where('role', '!=', 'admin')->get();
+       
         $users = User::all();
         return view('admin.user.index', compact('users'));
     }
 
     public function store(Request $request)
     {
-        // Validate the request
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -26,9 +26,7 @@ class UserController extends Controller
             'role' => 'required|in:vendor,admin',
         ]);
 
-        // dd($request->all());
 
-        // Create the user
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -39,13 +37,13 @@ class UserController extends Controller
             'status' => 'approved',
         ]);
 
-        // Redirect with success message
+
         return redirect()->route('admin.user.list')->with('success', 'User created successfully!');
     }
 
     public function application(Request $request)
     {
-        // Validate the request
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
@@ -55,9 +53,7 @@ class UserController extends Controller
             'role' => 'required|in:vendor,admin',
         ]);
 
-        // dd($request->all());
 
-        // Create the user
         User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -68,29 +64,29 @@ class UserController extends Controller
             'status' => 'pending',
         ]);
 
-        // Redirect with success message
+
         return redirect()->route('create.vendor.account')->with('success', 'Account created successfully!');
     }
 
     public function edit($id)
     {
-        $user = User::findOrFail($id); // Fetch the user by ID
-        return response()->json($user); // Return user data as JSON
+        $user = User::findOrFail($id);
+        return response()->json($user);
     }
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id); // Fetch the user by ID
-        $user->update($request->all()); // Update user data
+        $user = User::findOrFail($id);
+        $user->update($request->all());
         return redirect()->route('admin.user.list')->with('success', 'User updated successfully');
     }
 
     public function destroy($id)
     {
-        $user = User::findOrFail($id); // Find the user by ID
-        $user->delete(); // Delete the user
+        $user = User::findOrFail($id);
+        $user->delete();
 
-        // Redirect back with a success message
+
         return redirect()->route('admin.user.list')->with('success', 'User deleted successfully');
     }
 }

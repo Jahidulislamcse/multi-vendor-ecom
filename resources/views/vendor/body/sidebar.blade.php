@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href=""><i class="fas fa-home"></i>
+                    <a href="{{ route('vendor.dashboard') }}"><i class="fas fa-home"></i>
                         <p>Dashboard</p>
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
@@ -80,6 +80,24 @@
                             <li class=""> <a href="{{ route('vendor.order.processing') }}">Processing Orders</a></li>
                             <li class=""> <a href="{{ route('vendor.order.delivered') }}">Completed Orders</a></li>
                             <li class=""> <a href="{{ route('vendor.order.cancled') }}">Canceled Orders</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item ">
+                    <a data-bs-toggle="collapse" href="#payment">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Manage Payment </p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse " id="payment">
+                        <ul class="nav nav-collapse">
+                            <li class="">
+                                <a href="{{ route('vendor.payment.request') }}">
+                                    Request payment
+                                </a>
+                            </li>
+                            <li class=""> <a href="{{ route('vendor.order.pending') }}">Payment History</a></li>
                         </ul>
                     </div>
                 </li>

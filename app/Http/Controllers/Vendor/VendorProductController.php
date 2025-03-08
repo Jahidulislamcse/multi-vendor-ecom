@@ -22,12 +22,6 @@ class VendorProductController extends Controller
         return view('vendor.products.index', $data);
     }
 
-    // public function create()
-    // {
-    //     $categories = Category::all();
-    //     return view('products.create', compact('categories'));
-    // }
-
     protected function generateUniqueCode()
     {
         do {
@@ -40,7 +34,6 @@ class VendorProductController extends Controller
 
     public function store(Request $request)
     {
-        //  dd($request);
         $validated = $request->validate([
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
@@ -48,9 +41,7 @@ class VendorProductController extends Controller
             'short_description' => 'required|string',
         ]);
 
-        // Generate a random unique 6-digit code
         $validated['code'] = $this->generateUniqueCode();
-
         $validated['status'] = 'active';
         $validated['user_id'] = auth()->id();
         $validated['tags'] = json_encode($request->tags);

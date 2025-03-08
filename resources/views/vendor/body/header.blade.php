@@ -79,7 +79,7 @@
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">My Profile</a>
+                                <a class="dropdown-item" href="{{ route('vendor.profile.edit') }}">My Profile</a>
                                 <div class="dropdown-divider"></div>
                                 <!-- Logout Form -->
                                 <form method="POST" action="{{ route('logout') }}">
@@ -99,5 +99,3 @@
     </nav>
     <!-- End Navbar -->
 </div>
-
-

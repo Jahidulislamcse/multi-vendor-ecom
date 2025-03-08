@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedInteger('qty');
             $table->decimal('price', 10, 2);
+            $table->string('status')->default('pending');
             $table->timestamps();
         });
     }

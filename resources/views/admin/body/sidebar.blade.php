@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href=""><i class="fas fa-home"></i>
+                    <a href="{{ route('admin.dashboard') }}"><i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
@@ -70,19 +70,17 @@
                 <li class="nav-item ">
                     <a data-bs-toggle="collapse" href="#order">
                         <i class="fas fa-layer-group"></i>
-                        <p>Manage Orders</p>
+                        <p>Manage Order </p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse " id="order">
                         <ul class="nav nav-collapse">
-                            <li class="">
-                                <a href="">
-                                    All Order
-                                </a>
-                            </li>
-
-                            <li class=""> <a href="">Pending Orders</a></li>
-                            <li class=""> <a href="">Confirm Orders</a></li>
+                            <li class=""><a href="{{ route('admin.order.index') }}">All Order</a></li>
+                            <li class=""> <a href="{{ route('admin.order.pending') }}">Pending Orders</a></li>
+                            <li class=""> <a href="{{ route('admin.order.confirmed') }}">Confirm Orders</a></li>
+                            <li class=""> <a href="{{ route('admin.order.processing') }}">Processing Orders</a></li>
+                            <li class=""> <a href="{{ route('admin.order.delivered') }}">Completed Orders</a></li>
+                            <li class=""> <a href="{{ route('admin.order.cancled') }}">Canceled Orders</a></li>
                         </ul>
                     </div>
                 </li>

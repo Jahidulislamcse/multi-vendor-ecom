@@ -8,7 +8,9 @@ use App\Data\UpdateEmailData;
 use App\Data\UpdatePhoneData;
 use App\Data\UpdateProfileData;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Firebase;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ProfileController extends Controller
@@ -18,6 +20,13 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         return UserData::from($user);
+    }
+
+    public function edit(Request $request)
+    {
+        return view('admin.profile.edit', [
+            'user' => Auth::user(),
+        ]);
     }
 
     public function createVendor()
@@ -66,17 +75,28 @@ class ProfileController extends Controller
         return UserData::from($user);
     }
 
-    public function update(UpdateProfileData $data): UserData
+
+    public function update(Request $request)
     {
-        /** @var User */
         $user = auth()->user();
 
-        $user->update($data->toArray());
+        $validatedData = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'phone_number' => ['required', 'regex:/^\+?[0-9]{10,15}$/'],
+            'email' => ['required', 'email', 'max:255'],
+        ]);
 
-        if (is_string($data->profilePicture)) {
-            $user->addAllMediaFromTokens($data->profilePicture, 'avatar');
+        $existingUser = User::where('phone_number', $validatedData['phone_number'])
+            ->where('id', '!=', $user->id) // Exclude current user
+            ->first();
+
+        if ($existingUser) {
+            return redirect()->back()->withErrors(['phone_number' => 'This phone number is already in use.']);
         }
 
-        return UserData::from($user);
+
+        $user->update($validatedData);
+
+        return redirect()->back()->with('status', 'profile-updated');
     }
 }
