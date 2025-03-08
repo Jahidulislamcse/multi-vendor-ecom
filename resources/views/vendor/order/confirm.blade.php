@@ -65,7 +65,7 @@
 
 
                                             <td>{{ $orderInfo->customerInfo->name }} <br/>
-                                                {{ $orderInfo->customerInfo->phone }}
+                                                {{ $orderInfo->customerInfo->phone_number }}
                                             </td>
                                             <td><span class="badge bg-success" style="font-size: 15px;">{{ $orderInfo->status }}</span>
                                             </td>

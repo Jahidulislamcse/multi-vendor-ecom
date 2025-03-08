@@ -48,6 +48,7 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Customer & Phone</th>
+                                    <th>Vendor ID & store</th>
                                     <th>Status</th>
                                     <th>Total</th>
                                     <th>Order date</th>
@@ -60,24 +61,28 @@
                             </thead>
                             <tbody>
                                 @foreach ($orderList as $key => $orderInfo)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
-                                            <td>
-                                            </td>
-                                            <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
-                                                </td>
-                                            <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
-                                            <td>{{ $orderInfo->payment_type }}</td>
-                                            <td>{{ $orderInfo->payment_status }}</td>
-                                            <td>{{ $orderInfo->created_at->format('d F Y')}}</td>
-                                            <td>{{ $orderInfo->cancel_date }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.order.details', $orderInfo->id) }}"
-                                                    class="btn btn-warning btn-sm">View</a>
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $orderInfo->customerInfo->name }} <br />
+                                        {{ $orderInfo->customerInfo->phone_number }}
+                                    </td>
+                                    <td> {{ $orderInfo->vendor->id }} <br />
+                                        {{ $orderInfo->vendor->name }}
+                                    </td>
+                                    <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
+                                    </td>
+                                    <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
+                                    <td>{{ $orderInfo->payment_type }}</td>
+                                    <td>{{ $orderInfo->payment_status }}</td>
+                                    <td>{{ $orderInfo->created_at->format('d F Y')}}</td>
+                                    <td>{{ $orderInfo->cancel_date }}</td>
+                                    <td>
+                                        <a href="{{ route('admin.order.details', $orderInfo->id) }}"
+                                            class="btn btn-warning btn-sm">View</a>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -89,4 +94,4 @@
 </div>
 
 
-        @endsection
+@endsection

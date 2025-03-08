@@ -60,27 +60,27 @@
                             </thead>
                             <tbody>
                                 @foreach ($orderList as $key => $orderInfo)
-                                        <tr>
-                                            <td>{{ $key + 1 }}</td>
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
 
 
-                                            <td>{{ $orderInfo->customerInfo->name }} <br/>
-                                                {{ $orderInfo->customerInfo->phone }}
-                                            </td>
-                                            <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
-                                            </td>
-                                            <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
-                                            <td>{{ $orderInfo->payment_type }}</td>
-                                            <td>{{ $orderInfo->payment_status }}</td>
-                                            <td>{{ $orderInfo->created_at->format('d/m/Y')}}</td>
+                                    <td>{{ $orderInfo->customerInfo->name }} <br />
+                                        {{ $orderInfo->customerInfo->phone_number }}
+                                    </td>
+                                    <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
+                                    </td>
+                                    <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
+                                    <td>{{ $orderInfo->payment_type }}</td>
+                                    <td>{{ $orderInfo->payment_status }}</td>
+                                    <td>{{ $orderInfo->created_at->format('d/m/Y')}}</td>
 
-                                            <td>
-                                                <a href="{{ route('vendor.order.details', $orderInfo->id) }}"
-                                                    class="btn btn-warning btn-sm">View</a>
+                                    <td>
+                                        <a href="{{ route('vendor.order.details', $orderInfo->id) }}"
+                                            class="btn btn-warning btn-sm">View</a>
 
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    </td>
+                                </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -92,4 +92,4 @@
 </div>
 
 
-        @endsection
+@endsection

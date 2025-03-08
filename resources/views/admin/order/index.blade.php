@@ -48,6 +48,7 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Customer & Phone</th>
+                                    <th>Vendor ID & store</th>
                                     <th>Status</th>
                                     <th>Total</th>
                                     <th>Order date</th>
@@ -63,7 +64,11 @@
                                     <td>{{ $key + 1 }}</td>
 
 
-                                    <td>
+                                    <td>{{ $orderInfo->customerInfo->name }} <br />
+                                        {{ $orderInfo->customerInfo->phone_number }}
+                                    </td>
+                                    <td> {{ $orderInfo->vendor->id }} <br />
+                                        {{ $orderInfo->vendor->name }}
                                     </td>
                                     <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
                                     </td>

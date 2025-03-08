@@ -89,6 +89,7 @@ class VendorProductController extends Controller
                         $variantSize->product_id = $product->id;
                         $variantSize->size = $sizeData['size'];
                         $variantSize->quantity = $sizeData['quantity'];
+                        $variantSize->buying_price = $sizeData['buying_price'];
                         $variantSize->selling_price = $sizeData['selling_price'];
                         $variantSize->photo = $photoPath;
                         $variantSize->discount_price = $sizeData['discount_price'] ?? null;
@@ -188,6 +189,7 @@ class VendorProductController extends Controller
                         $variantSizeUpdate->product_id = $product->id;
                         $variantSizeUpdate->size = $sizeData['size'];
                         $variantSizeUpdate->quantity = $sizeData['quantity'];
+                        $variantSizeUpdate->buying_price = $sizeData['buying_price'];
                         $variantSizeUpdate->selling_price = $sizeData['selling_price'];
                         $variantSizeUpdate->photo = $photoPath; // Set photo path (new or old)
                         $variantSizeUpdate->discount_price = $sizeData['discount_price'] ?? null;
@@ -217,6 +219,7 @@ class VendorProductController extends Controller
                         $variantSize->product_id = $product->id;
                         $variantSize->size = $sizeData['size'];
                         $variantSize->quantity = $sizeData['quantity'];
+                        $variantSize->buying_price = $sizeData['buying_price'];
                         $variantSize->selling_price = $sizeData['selling_price'];
                         $variantSize->photo = $photoPath;
                         $variantSize->discount_price = $sizeData['discount_price'] ?? null;

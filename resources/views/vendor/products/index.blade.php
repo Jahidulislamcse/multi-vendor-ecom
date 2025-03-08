@@ -99,38 +99,6 @@
                                                     @enderror
                                                 </div>
 
-                                                {{-- <div class="form-group">
-                                                        <label for="selling_price">Selling Price <span
-                                                                class="text-danger">*</span> </label>
-                                                        <input type="number" name="selling_price" id="selling_price"
-                                                            class="form-control @error('selling_price') is-invalid @enderror"
-                                                            value="{{ old('selling_price', $product->selling_price ?? '') }}"
-                                                required>
-                                                @error('selling_price')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="discount_price">Discount Price</label>
-                                                <input type="number" name="discount_price" id="discount_price"
-                                                    class="form-control  @error('discount_price') is-invalid @enderror"
-                                                    value="{{ old('discount_price', $product->discount_price ?? '') }}">
-                                                @error('discount_price')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label for="quantity">Quantity</label>
-                                                <input type="number" name="quantity" id="quantity"
-                                                    class="form-control  @error('quantity') is-invalid @enderror"
-                                                    value="{{ old('quantity', $product->quantity ?? '') }}">
-                                                @error('quantity')
-                                                <div class="alert alert-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div> --}}
-
                                             <div id="variants">
                                                 <div class="variant">
                                                     <h4 class="mt-4">Variant - 1</h4>
@@ -146,12 +114,17 @@
                                                                 <input type="number" min="1" class="form-control"
                                                                     name="variants[0][sizes][0][quantity]" required>
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-2">
+                                                                <label for="buying_price">Buying Price</label>
+                                                                <input type="number" min="1" class="form-control"
+                                                                    name="variants[0][sizes][0][buying_price]" required>
+                                                            </div>
+                                                            <div class="col-2">
                                                                 <label for="selling_price">Selling Price</label>
                                                                 <input type="number" min="1" class="form-control"
                                                                     name="variants[0][sizes][0][selling_price]" required>
                                                             </div>
-                                                            <div class="col-3">
+                                                            <div class="col-2">
                                                                 <label for="discount_price">Discount Price</label>
                                                                 <input type="number" min="1" class="form-control"
                                                                     name="variants[0][sizes][0][discount_price]">
@@ -162,8 +135,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
                                                 </div>
                                             </div>
                                             <button type="button" id="addVariant" class="btn btn-success btn-sm mt-3">
@@ -444,11 +415,15 @@
                 <label for="quantity">Quantity</label>
                 <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][quantity]" required>
             </div>
-            <div class="col-3">
+            <div class="col-2">
+                <label for="buying_price">Buying Price</label>
+                <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][buying_price]" required>
+            </div>
+            <div class="col-2">
                 <label for="selling_price">Selling Price</label>
                 <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][selling_price]" required>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label for="discount_price">Discount Price</label>
                 <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][discount_price]">
             </div>

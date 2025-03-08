@@ -76,12 +76,12 @@
                     <table class="table" style="background:#F4F6FA;font-weight: 600;">
                         <tr>
                             <th> Name :</th>
-                            <th></th>
+                            <th>{{ $orderInfo->customerInfo->name }}</th>
                         </tr>
 
                         <tr>
                             <th>Phone :</th>
-                            <th></th>
+                            <th>{{ $orderInfo->customerInfo->phone_number }}</th>
                         </tr>
 
                         <tr>
@@ -107,20 +107,20 @@
                             <th> </th>
                             <th>
                                 @if ($orderInfo->status == 'pending')
-                                    <a href="{{ route('vendor.order.pending-confirm', $orderInfo->id) }}"
-                                        class="btn btn-block btn-success" id="confirm"
-                                        onclick="return confirm('Are you sure you want to Confirm this order?');">Confirm
-                                        Order</a>
-                                    <a href="{{ route('vendor.order.pending-cancel', $orderInfo->id) }}"
-                                        class="btn btn-block btn-success" id="cancel"
-                                        onclick="return confirm('Are you sure you want to Cancel this order?');">Cancel
-                                        Order</a>
+                                <a href="{{ route('vendor.order.pending-confirm', $orderInfo->id) }}"
+                                    class="btn btn-block btn-success" id="confirm"
+                                    onclick="return confirm('Are you sure you want to Confirm this order?');">Confirm
+                                    Order</a>
+                                <a href="{{ route('vendor.order.pending-cancel', $orderInfo->id) }}"
+                                    class="btn btn-block btn-success" id="cancel"
+                                    onclick="return confirm('Are you sure you want to Cancel this order?');">Cancel
+                                    Order</a>
                                 @elseif($orderInfo->status == 'confirm')
-                                    <a href="{{ route('vendor.order.confirm-processing', $orderInfo->id) }}"
-                                        class="btn btn-block btn-success" id="processing">Processing Order</a>
+                                <a href="{{ route('vendor.order.confirm-processing', $orderInfo->id) }}"
+                                    class="btn btn-block btn-success" id="processing">Processing Order</a>
                                 @elseif($orderInfo->status == 'processing')
-                                    <a href="{{ route('vendor.order.processing-delivered', $orderInfo->id) }}"
-                                        class="btn btn-block btn-success" id="delivered">Delivered Order</a>
+                                <a href="{{ route('vendor.order.processing-delivered', $orderInfo->id) }}"
+                                    class="btn btn-block btn-success" id="delivered">Delivered Order</a>
                                 @endif
                             </th>
                         </tr>
@@ -172,52 +172,52 @@
                             </tr>
 
                             @php
-                                $grandTotal = 0;
+                            $grandTotal = 0;
                             @endphp
                             @foreach ($orderInfo->orderDetails as $item)
-                                @php
-                                    $totalPrice = $item->price * $item->qty;
-                                    $grandTotal += $totalPrice;
+                            @php
+                            $totalPrice = $item->price * $item->qty;
+                            $grandTotal += $totalPrice;
 
-                                @endphp
+                            @endphp
 
-                                <tr>
-                                    <td class="col-md-1">
-                                      @if ($item->productInfo && $item->productInfo->imagesProduct)
-    <label>
-        <img src="{{ asset($item->productInfo->imagesProduct->path) }}" style="width:50px; height:50px;">
-    </label>
-@endif
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div>
-                                            <h5>{{ $item->productInfo->name }}</h5>
-                                            <br/>
-                                            <h5>Size:{{ $item->stockInfo->size }}</h5>
-                                        </div>
+                            <tr>
+                                <td class="col-md-1">
+                                    @if ($item->productInfo && $item->productInfo->imagesProduct)
+                                    <label>
+                                        <img src="{{ asset($item->productInfo->imagesProduct->path) }}" style="width:50px; height:50px;">
+                                    </label>
+                                    @endif
+                                </td>
+                                <td class="col-md-2">
+                                    <div>
+                                        <h5>{{ $item->productInfo->name }}</h5>
+                                        <br />
+                                        <h5>Size:{{ $item->stockInfo->size }}</h5>
+                                    </div>
 
-                                    </td>
+                                </td>
 
 
 
-                                    <td class="col-md-1">
-                                        <label>{{ $item->productInfo->quantity }}</label>
-                                    </td>
-                                    <td class="col-md-1">
-                                        <label>{{ $item->qty }} </label>
-                                    </td>
+                                <td class="col-md-1">
+                                    <label>{{ $item->productInfo->quantity }}</label>
+                                </td>
+                                <td class="col-md-1">
+                                    <label>{{ $item->qty }} </label>
+                                </td>
 
-                                    <td class="col-md-2">
-                                        <label>{{ $item->price }} &nbsp;{{ env('currency') }}
-                                        </label>
-                                    </td>
+                                <td class="col-md-2">
+                                    <label>{{ $item->price }} &nbsp;{{ env('currency') }}
+                                    </label>
+                                </td>
 
-                                    <td class="col-md-2">
-                                        <label>{{ $item->price * $item->qty }}
-                                            &nbsp;{{ env('currency') }}
-                                        </label>
-                                    </td>
-                                </tr>
+                                <td class="col-md-2">
+                                    <label>{{ $item->price * $item->qty }}
+                                        &nbsp;{{ env('currency') }}
+                                    </label>
+                                </td>
+                            </tr>
                             @endforeach
                             <tr>
                                 <td colspan="5" class="text-end"><strong>Item Total:</strong></td>
@@ -247,4 +247,4 @@
 </div>
 
 
-        @endsection
+@endsection

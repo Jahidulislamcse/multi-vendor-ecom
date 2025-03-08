@@ -8,6 +8,7 @@ use App\Models\MainOrder;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Stock;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
@@ -15,22 +16,21 @@ class AdminOrderController extends Controller
 {
     public function index()
     {
-        $orderList = MainOrder::with('customerInfo')->orderBy('id', 'desc')->get();
-        //  dd($orderList);
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->orderBy('id', 'desc')->get();
         return view('admin.order.index', compact('orderList'));
     }
 
     public function orderDetails(Request $request, $id = null)
     {
 
-        $orderInfo = MainOrder::with('orderDetails', 'customerInfo', 'orderDetails.productInfo', 'orderDetails.productInfo.imagesProduct', 'orderDetails.stockInfo')->where('id', $request->id)->first();
+        $orderInfo = MainOrder::with('orderDetails', 'vendor', 'customerInfo', 'orderDetails.productInfo', 'orderDetails.productInfo.imagesProduct', 'orderDetails.stockInfo')->where('id', $request->id)->first();
         return view('admin.order.details', compact('orderInfo'));
     }
 
     public function PendingOrder()
     {
 
-        $orderList = MainOrder::with('customerInfo')->where('status', 'pending')->orderBy('id', 'DESC')->get();
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'pending')->orderBy('id', 'DESC')->get();
 
         $countOrder = MainOrder::where('status', 'pending')->count('id');
         return view('admin.order.pending', compact('orderList', 'countOrder'));
@@ -39,7 +39,7 @@ class AdminOrderController extends Controller
     public function ConfirmedOrder()
     {
 
-        $orderList = MainOrder::with('customerInfo')->where('status', 'confirm')->orderBy('id', 'DESC')->get();
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'confirm')->orderBy('id', 'DESC')->get();
 
 
         return view('admin.order.confirm', compact('orderList'));
@@ -48,7 +48,7 @@ class AdminOrderController extends Controller
     public function ProcessingOrder()
     {
 
-        $orderList = MainOrder::with('customerInfo')->where('status', 'processing')->orderBy('id', 'DESC')->get();
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'processing')->orderBy('id', 'DESC')->get();
 
 
         return view('admin.order.processing', compact('orderList'));
@@ -57,7 +57,7 @@ class AdminOrderController extends Controller
     public function DeliveredOrder()
     {
 
-        $orderList = MainOrder::with('customerInfo')->where('status', 'deliverd')->orderBy('id', 'DESC')->get();
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'deliverd')->orderBy('id', 'DESC')->get();
 
 
         return view('admin.order.confirm', compact('orderList'));
@@ -66,7 +66,7 @@ class AdminOrderController extends Controller
     public function CancledOrder()
     {
 
-        $orderList = MainOrder::with('customerInfo')->where('status', 'cancel')->orderBy('id', 'DESC')->get();
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'cancel')->orderBy('id', 'DESC')->get();
 
 
         return view('admin.order.cancle', compact('orderList'));

@@ -99,7 +99,7 @@
                                                 @else
                                                 {{-- If more than 1 image is present, show the delete button --}}
                                                 <a class="btn btn-danger btn-sm" style="position: absolute; right:0; top:0"
-                                                    href="" id="delete"
+                                                    href="{{ route('vendor.product-image-delete', $image->id) }}" id="delete"
                                                     data-bs-toggle="tooltip" title="Delete Data">
                                                     <span aria-hidden="true">&times;</span>
                                                 </a>
@@ -157,19 +157,25 @@
                                             value="{{ $info->quantity }}" required>
                                     </div>
                                     <div class="col-2">
+                                        <label for="buying_price">Buying Price</label>
+                                        <input type="number" min="0" class="form-control"
+                                            name="variantsUpdate[{{ $loop->index }}][sizes][{{ $loop->index }}][buying_price]"
+                                            value="{{ $info->buying_price }}" required>
+                                    </div>
+                                    <div class="col-2">
                                         <label for="selling_price">Selling Price</label>
                                         <input type="number" min="0" class="form-control"
                                             name="variantsUpdate[{{ $loop->index }}][sizes][{{ $loop->index }}][selling_price]"
                                             value="{{ $info->selling_price }}" required>
                                     </div>
-                                    <div class="col-3">
+                                    <div class="col-2">
                                         <label for="discount_price">Discount Price</label>
                                         <input type="number" min="0" class="form-control"
                                             name="variantsUpdate[{{ $loop->index }}][sizes][{{ $loop->index }}][discount_price]"
                                             value="{{ $info->discount_price }}">
                                     </div>
                                     <div class="col-2 mt-2">
-                                        <a href="" type="button"
+                                        <a href="{{ route('vendor.product-stock-delete', $info->id) }}" type="button"
                                             class="btn btn-danger btn-sm mt-3">
                                             <i class="bx bx-minus"></i> Remove Variant
                                         </a>
@@ -483,11 +489,15 @@
                 <label for="quantity">Quantity</label>
                 <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][quantity]" required>
             </div>
-            <div class="col-3">
+            <div class="col-2">
+                <label for="buying_price">Buying Price</label>
+                <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][buying_price]" required>
+            </div>
+            <div class="col-2">
                 <label for="selling_price">Selling Price</label>
                 <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][selling_price]" required>
             </div>
-            <div class="col-3">
+            <div class="col-2">
                 <label for="discount_price">Discount Price</label>
                 <input type="number" min="1" class="form-control" name="variants[${variantCount}][sizes][0][discount_price]">
             </div>

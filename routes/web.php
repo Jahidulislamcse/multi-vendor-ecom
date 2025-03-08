@@ -45,6 +45,8 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
         return view('vendor.index');
     })->name('dashboard');
     Route::resource('products', VendorProductController::class);
+    Route::get('product-image-delete/{id}', [VendorProductController::class, 'ImageDelete'])->name('product-image-delete');
+    Route::get('product-stock-delete/{id}', [VendorProductController::class, 'StockDelete'])->name('product-stock-delete');
     Route::get('/get-tags', [TagController::class, 'getTags'])->name('get.tags');
 });
 

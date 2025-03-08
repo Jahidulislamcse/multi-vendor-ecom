@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('main_orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->integer('vendor_id');
             $table->string('name');
             $table->string('email');
             $table->string('phone');
@@ -43,6 +45,8 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+
+
 
     /**
      * Reverse the migrations.

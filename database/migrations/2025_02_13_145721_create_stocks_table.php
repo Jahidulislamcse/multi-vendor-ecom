@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('size')->nullable();
             $table->integer('quantity')->nullable();
             $table->integer('order_qty')->default(0);
+            $table->decimal('buying_price', 8, 2)->nullable();
             $table->decimal('selling_price', 8, 2)->nullable();
             $table->decimal('discount_price', 8, 2)->nullable();
             $table->string('photo')->nullable();
