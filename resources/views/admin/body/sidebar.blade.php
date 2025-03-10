@@ -79,8 +79,27 @@
                             <li class=""> <a href="{{ route('admin.order.pending') }}">Pending Orders</a></li>
                             <li class=""> <a href="{{ route('admin.order.confirmed') }}">Confirm Orders</a></li>
                             <li class=""> <a href="{{ route('admin.order.processing') }}">Processing Orders</a></li>
-                            <li class=""> <a href="{{ route('admin.order.delivered') }}">Completed Orders</a></li>
+                            <li class=""> <a href="{{ route('admin.order.delivered') }}">Delivered Orders</a></li>
+                            <li class=""> <a href="{{ route('admin.order.completed') }}">Completed Orders</a></li>
                             <li class=""> <a href="{{ route('admin.order.cancled') }}">Canceled Orders</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item ">
+                    <a data-bs-toggle="collapse" href="#payment">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Manage Payment </p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse " id="payment">
+                        <ul class="nav nav-collapse">
+                            <li class="">
+                                <a href="{{ route('admin.payment.requests') }}">
+                                    Payment Requests
+                                </a>
+                            </li>
+                            <li class=""> <a href="{{ route('admin.payment.history') }}">Payment History</a></li>
                         </ul>
                     </div>
                 </li>

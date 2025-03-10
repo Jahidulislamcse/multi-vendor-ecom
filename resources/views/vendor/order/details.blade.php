@@ -104,6 +104,10 @@
                             <th><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span></th>
                         </tr>
                         <tr>
+                            <th>Payment Status:</th>
+                            <th><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->payment_status }}</span></th>
+                        </tr>
+                        <tr>
                             <th> </th>
                             <th>
                                 @if ($orderInfo->status == 'pending')

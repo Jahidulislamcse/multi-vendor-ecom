@@ -52,9 +52,7 @@
                                     <th>Total</th>
                                     <th>Order date</th>
                                     <th>Payment Type</th>
-                                    <th>Payment Status</th>
                                     <th>Updated Date</th>
-
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -68,9 +66,8 @@
                                     <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
                                     </td>
                                     <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
+                                    <td>{{ $orderInfo->created_at->format('d/m/Y')}}</td>
                                     <td>{{ $orderInfo->payment_type }}</td>
-                                    <td>{{ $orderInfo->payment_status }}</td>
-                                    <td>{{ $orderInfo->created_at->format('d F Y')}}</td>
                                     <td>{{ $orderInfo->cancel_date }}</td>
                                     <td>
                                         <a href="{{ route('vendor.order.details', $orderInfo->id) }}"

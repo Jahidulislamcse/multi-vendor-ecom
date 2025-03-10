@@ -60,7 +60,16 @@ class AdminOrderController extends Controller
         $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'deliverd')->orderBy('id', 'DESC')->get();
 
 
-        return view('admin.order.confirm', compact('orderList'));
+        return view('admin.order.delivered', compact('orderList'));
+    }
+
+    public function CompletedOrder()
+    {
+
+        $orderList = MainOrder::with(['customerInfo', 'vendor'])->where('status', 'deliverd')->where('payment_status', 'received')->orderBy('id', 'DESC')->get();
+
+
+        return view('admin.order.completed', compact('orderList'));
     }
 
     public function CancledOrder()
@@ -72,81 +81,28 @@ class AdminOrderController extends Controller
         return view('admin.order.cancle', compact('orderList'));
     }
 
-    public function PendingToConfirm($order_id)
+    public function DeliveredToCompleted($order_id)
     {
-        MainOrder::findOrFail($order_id)->update(['status' => 'confirm', 'confirmed_date' => Carbon::now()->format('d F Y')]);
-        OrderItem::where('main_order_id', $order_id)
-            ->update([
-                'status' => 'confirm',
-            ]);
-        $notification = array(
-            'message' => 'Order Confirm Successfully',
-            'alert-type' => 'success'
-        );
+        $order = MainOrder::findOrFail($order_id);
 
-        return redirect()->route('admin.order.confirmed')->with($notification);
-    }
-
-    public function PendingToCancel($order_id)
-    {
-        MainOrder::findOrFail($order_id)->update([
-            'status' => 'cancel',
-            'cancel_date' => Carbon::now()->format('d F Y'),
-        ]);
-        OrderItem::where('main_order_id', $order_id)
-            ->update([
-                'status' => 'cancel',
-            ]);
-        $order = MainOrder::where('id', $order_id)->first();
-        $orderItem = OrderItem::where('main_order_id', $order_id)->get();
-        foreach ($orderItem as $item) {
-            $product = Stock::where('id', $item->stock_info_id)->first();
-            $product->order_qty = $product->order_qty - $item->qty;
-            $product->quantity = $product->quantity + $item->qty;
-            $product->save();
+        if ($order && $order->vendor_id) {
+            $vendor = User::find($order->vendor_id);
+            if ($vendor) {
+                $vendor->total_sales += $order->amount;
+                $vendor->save();
+            }
         }
 
-        $notification = array(
-            'message' => 'Order Cancel Successfully',
-            'alert-type' => 'success'
-        );
+        $order->update(['payment_status' => 'received']);
 
-        return redirect()->route('admin.order.cancled')->with($notification);
+        $notification = [
+            'message' => 'Order Completed Successfully',
+            'alert-type' => 'success'
+        ];
+
+        return redirect()->route('admin.order.completed')->with($notification);
     }
 
-
-    public function ConfirmToProcess($order_id)
-    {
-        MainOrder::findOrFail($order_id)->update(['status' => 'processing', 'processing_date' => Carbon::now()->format('d F Y')]);
-        OrderItem::where('main_order_id', $order_id)
-            ->update([
-                'status' => 'processing',
-            ]);
-        $notification = array(
-            'message' => 'Order Processing Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.order.processing')->with($notification);
-    }
-
-
-    public function ProcessToDelivered($order_id)
-    {
-
-
-        MainOrder::findOrFail($order_id)->update(['status' => 'deliverd', 'delivered_date' => Carbon::now()]);
-        OrderItem::where('main_order_id', $order_id)
-            ->update([
-                'status' => 'deliverd',
-            ]);
-        $notification = array(
-            'message' => 'Order Deliverd Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->route('admin.order.delivered')->with($notification);
-    }
 
 
     public function AdminInvoiceDownload($order_id)

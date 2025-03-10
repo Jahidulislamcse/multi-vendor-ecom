@@ -108,6 +108,21 @@
                             <th>Order Status:</th>
                             <th><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span></th>
                         </tr>
+                        <tr>
+                            <th>Payment Status:</th>
+                            <th><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->payment_status }}</span></th>
+                        </tr>
+                        <tr>
+                            <th> </th>
+                            <th>
+                                @if ($orderInfo->status == 'deliverd' && $orderInfo->payment_status == 'pending')
+                                <a href="{{ route('admin.order.delivered-completed', $orderInfo->id) }}"
+                                    class="btn btn-block btn-success" id="completed"
+                                    onclick="return confirm('Are you sure to mark this order Completed ?');">Completed
+                                    Order</a>
+                                @endif
+                            </th>
+                        </tr>
 
 
                     </table>

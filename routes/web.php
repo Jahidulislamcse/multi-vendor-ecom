@@ -62,6 +62,7 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
                 Route::get('/confirmed', 'ConfirmedOrder')->name('confirmed');
                 Route::get('/processing', 'ProcessingOrder')->name('processing');
                 Route::get('/delivered', 'DeliveredOrder')->name('delivered');
+                Route::get('/completed', 'completedOrder')->name('completed');
                 Route::get('/cancled', 'CancledOrder')->name('cancled');
                 Route::get('/pending/confirm/{order_id}', 'PendingToConfirm')->name('pending-confirm');
                 Route::get('/confirm/processing/{order_id}', 'ConfirmToProcess')->name('confirm-processing');
@@ -71,7 +72,9 @@ Route::prefix('vendor')->name('vendor.')->group(function () {
             });
         });
         Route::get('/payment/request', [PaymentController::class, 'request'])->name('payment.request');
-    });
+        Route::post('/money/withdraw', [PaymentController::class, 'storeWithdrawRequest'])->name('money.withdraw');
+        Route::get('/payment/history', [PaymentController::class, 'paymentHistory'])->name('payment.history');
+});
 
 
 Route::middleware(['auth', 'role:admin,vendor'])->group(function () {});
@@ -91,11 +94,9 @@ Route::middleware('role:admin')->group(function () {
                 Route::get('/confirmed', 'ConfirmedOrder')->name('confirmed');
                 Route::get('/processing', 'ProcessingOrder')->name('processing');
                 Route::get('/delivered', 'DeliveredOrder')->name('delivered');
+                Route::get('/completed', 'completedOrder')->name('completed');
                 Route::get('/cancled', 'CancledOrder')->name('cancled');
-                Route::get('/pending/confirm/{order_id}', 'PendingToConfirm')->name('pending-confirm');
-                Route::get('/confirm/processing/{order_id}', 'ConfirmToProcess')->name('confirm-processing');
-                Route::get('/pending/cancel/{order_id}', 'PendingToCancel')->name('pending-cancel');
-                Route::get('/processing/delivered/{order_id}', 'ProcessToDelivered')->name('processing-delivered');
+                Route::get('/delivered/completed/{order_id}', 'DeliveredToCompleted')->name('delivered-completed');
                 Route::get('/invoice/download/{order_id}', 'AdminInvoiceDownload')->name('invoice.download');
             });
         });
@@ -114,6 +115,9 @@ Route::middleware('role:admin')->group(function () {
             Route::get('/', [AdminSettingController::class, 'Index'])->name('index');
             Route::post('/', [AdminSettingController::class, 'Update'])->name('update');
         });
+        Route::get('/payment/requests', [PaymentController::class, 'PaymentRequests'])->name('payment.requests');
+        Route::get('/payment/history', [PaymentController::class, 'AdminPaymentHistory'])->name('payment.history');
+        Route::put('/payment/update/{bill}', [PaymentController::class, 'update'])->name('payment.update');
     });
 });
 

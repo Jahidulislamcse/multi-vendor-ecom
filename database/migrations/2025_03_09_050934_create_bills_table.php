@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('adress')->nullable();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->decimal('amount', 10, 2);
+            $table->string('transaction_id')->nullable();
+            $table->string('payment_media')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

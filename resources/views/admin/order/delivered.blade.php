@@ -51,9 +51,10 @@
                                     <th>Vendor ID & store</th>
                                     <th>Status</th>
                                     <th>Total</th>
-                                    <th>Payment Type</th>
                                     <th>Order date</th>
-
+                                    <th>Payment Type</th>
+                                    <th>Payment Status</th>
+                                    <th>Updated Date</th>
 
                                     <th>Actions</th>
                                 </tr>
@@ -62,23 +63,24 @@
                                 @foreach ($orderList as $key => $orderInfo)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
-
-
                                     <td>{{ $orderInfo->customerInfo->name }} <br />
                                         {{ $orderInfo->customerInfo->phone_number }}
                                     </td>
                                     <td> {{ $orderInfo->vendor->id }} <br />
                                         {{ $orderInfo->vendor->name }}
                                     </td>
-                                    <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
+                                    <td><span class="badge bg-success" style="font-size: 15px;">{{ $orderInfo->status }}</span>
                                     </td>
                                     <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
-                                    <td>{{ $orderInfo->payment_type }}</td>
                                     <td>{{ $orderInfo->order_date}}</td>
-
+                                    <td>{{ $orderInfo->payment_type }}</td>
+                                    <td>{{ $orderInfo->payment_status }}</td>
+                                    <td>{{ $orderInfo->delivered_date}}</td>
                                     <td>
                                         <a href="{{ route('admin.order.details', $orderInfo->id) }}"
                                             class="btn btn-warning btn-sm">View</a>
+                                        <a href="{{ route('admin.order.invoice.download', $orderInfo->id) }}" class="btn btn-danger"
+                                            title="Invoice Pdf"><i class="fa fa-download"></i> </a>
 
                                     </td>
                                 </tr>

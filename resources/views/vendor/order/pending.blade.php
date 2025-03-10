@@ -51,7 +51,6 @@
                                     <th>Status</th>
                                     <th>Total</th>
                                     <th>Payment Type</th>
-                                    <th>Payment Status</th>
                                     <th>Order date</th>
 
 
@@ -71,7 +70,6 @@
                                     </td>
                                     <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
                                     <td>{{ $orderInfo->payment_type }}</td>
-                                    <td>{{ $orderInfo->payment_status }}</td>
                                     <td>{{ $orderInfo->created_at->format('d/m/Y')}}</td>
 
                                     <td>

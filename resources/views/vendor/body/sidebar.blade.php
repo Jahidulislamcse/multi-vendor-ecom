@@ -78,7 +78,8 @@
                             <li class=""> <a href="{{ route('vendor.order.pending') }}">Pending Orders</a></li>
                             <li class=""> <a href="{{ route('vendor.order.confirmed') }}">Confirm Orders</a></li>
                             <li class=""> <a href="{{ route('vendor.order.processing') }}">Processing Orders</a></li>
-                            <li class=""> <a href="{{ route('vendor.order.delivered') }}">Completed Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.delivered') }}">Delivered Orders</a></li>
+                            <li class=""> <a href="{{ route('vendor.order.completed') }}">Completed Orders</a></li>
                             <li class=""> <a href="{{ route('vendor.order.cancled') }}">Canceled Orders</a></li>
                         </ul>
                     </div>
@@ -97,7 +98,7 @@
                                     Request payment
                                 </a>
                             </li>
-                            <li class=""> <a href="{{ route('vendor.order.pending') }}">Payment History</a></li>
+                            <li class=""> <a href="{{ route('vendor.payment.history') }}">Payment History</a></li>
                         </ul>
                     </div>
                 </li>

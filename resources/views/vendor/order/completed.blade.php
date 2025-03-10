@@ -1,10 +1,10 @@
-@extends('admin.admin_dashboard')
+@extends('vendor.vendor_dashboard')
 @section('main')
 <div class="page-inner">
     <div class="page-header">
         <ul class="breadcrumbs mb-3">
             <li class="nav-home">
-                <a href="{{ route('admin.dashboard') }}">
+                <a href="{{ route('vendor.dashboard') }}">
                     <i class="icon-home"></i>
                     Dashbard
                 </a>
@@ -48,13 +48,12 @@
                                 <tr>
                                     <th>SN</th>
                                     <th>Customer & Phone</th>
-                                    <th>Vendor ID & store</th>
                                     <th>Status</th>
                                     <th>Total</th>
-                                    <th>Payment Type</th>
                                     <th>Order date</th>
-
-
+                                    <th>Payment Type</th>
+                                    <th>Updated Date</th>
+                                    <th>Payment Status</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -67,18 +66,18 @@
                                     <td>{{ $orderInfo->customerInfo->name }} <br />
                                         {{ $orderInfo->customerInfo->phone_number }}
                                     </td>
-                                    <td> {{ $orderInfo->vendor->id }} <br />
-                                        {{ $orderInfo->vendor->name }}
-                                    </td>
-                                    <td><span class="badge bg-danger" style="font-size: 15px;">{{ $orderInfo->status }}</span>
+                                    <td><span class="badge bg-success" style="font-size: 15px;">{{ $orderInfo->status }}</span>
                                     </td>
                                     <td>{{ $orderInfo->amount + $orderInfo->shipping_cost }}</td>
+                                    <td>{{ $orderInfo->created_at->format('d/m/Y')}}</td>
                                     <td>{{ $orderInfo->payment_type }}</td>
-                                    <td>{{ $orderInfo->order_date}}</td>
-
+                                    <td>{{ $orderInfo->delivered_date}}</td>
+                                    <td>{{ $orderInfo->payment_status }}</td>
                                     <td>
-                                        <a href="{{ route('admin.order.details', $orderInfo->id) }}"
+                                        <a href="{{ route('vendor.order.details', $orderInfo->id) }}"
                                             class="btn btn-warning btn-sm">View</a>
+                                        <a href="{{ route('vendor.order.invoice.download', $orderInfo->id) }}" class="btn btn-danger"
+                                            title="Invoice Pdf"><i class="fa fa-download"></i> </a>
 
                                     </td>
                                 </tr>

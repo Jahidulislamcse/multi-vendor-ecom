@@ -95,7 +95,13 @@ class VendorOrderController extends Controller
         $orderList = MainOrder::with('customerInfo')->where('vendor_id', auth()->id())->where('status', 'deliverd')->orderBy('id', 'DESC')->get();
 
 
-        return view('vendor.order.confirm', compact('orderList'));
+        return view('vendor.order.delivered', compact('orderList'));
+    }
+    public function completedOrder()
+    {
+
+        $orderList = MainOrder::with('customerInfo')->where('vendor_id', auth()->id())->where('status', 'deliverd')->where('payment_status', 'received')->orderBy('id', 'DESC')->get();
+        return view('vendor.order.completed', compact('orderList'));
     }
     public function CancledOrder()
     {
